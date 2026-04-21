@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Icon } from "../components/icon";
 import { DisclosureSheet } from "../components/disclosure-sheet";
-import { agreementDefs, priorConsents } from "../data/merchant";
+import { disclosureGroups, priorConsents } from "../data/merchant";
 
 interface AgreementsProps {
   onBack: () => void;
@@ -12,18 +12,18 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
   const [accepted, setAccepted] = useState<Set<string>>(() => new Set());
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const allDone = accepted.size === agreementDefs.length
-  const activeAgreement = agreementDefs.find((a) => a.id === openId) || null
+  const allDone = accepted.size === disclosureGroups.length;
+  const activeGroup = disclosureGroups.find((g) => g.id === openId) ?? null;
 
   const acceptCurrent = () => {
-    if (!openId) return
+    if (!openId) return;
     setAccepted((prev) => {
-      const next = new Set(prev)
-      next.add(openId)
-      return next
-    })
-    setOpenId(null)
-  }
+      const next = new Set(prev);
+      next.add(openId);
+      return next;
+    });
+    setOpenId(null);
+  };
 
   return (
     <div className="screen">
@@ -37,10 +37,10 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
 
       <div className="screen-body stack-lg">
         <div>
-          <h1 className="heading-600" style={{ margin: 0, letterSpacing: '-0.01em' }}>
+          <h1 className="heading-600" style={{ margin: 0, letterSpacing: "-0.01em" }}>
             Almost there!
           </h1>
-          <p className="body-400 muted" style={{ margin: '6px 0 0' }}>
+          <p className="body-400 muted" style={{ margin: "6px 0 0" }}>
             Tap each agreement to read and accept.
           </p>
         </div>
@@ -48,11 +48,11 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
         <div className="agreements-progress">
           <div
             className="agreements-progress-fill"
-            style={{ width: `${(accepted.size / agreementDefs.length) * 100}%` }}
+            style={{ width: `${(accepted.size / disclosureGroups.length) * 100}%` }}
           />
         </div>
         <div className="body-200 muted" style={{ marginTop: -8 }}>
-          {accepted.size} of {agreementDefs.length} accepted
+          {accepted.size} of {disclosureGroups.length} accepted
         </div>
 
         <div className="disclosure-owner">
@@ -61,13 +61,15 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
         </div>
 
         <div className="stack-md">
-          {agreementDefs.map((a) => {
-            const done = accepted.has(a.id)
+          {disclosureGroups.map((g) => {
+            const done = accepted.has(g.id);
+            const docCountLabel =
+              g.docs.length > 1 ? ` · ${g.docs.length} documents` : "";
             return (
               <button
-                key={a.id}
-                className={`agreement-row ${done ? 'is-done' : ''}`}
-                onClick={() => setOpenId(a.id)}
+                key={g.id}
+                className={`agreement-row ${done ? "is-done" : ""}`}
+                onClick={() => setOpenId(g.id)}
                 type="button"
               >
                 <div className="agreement-row-icon">
@@ -78,25 +80,25 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
                   )}
                 </div>
                 <div className="agreement-row-body">
-                  <div className="heading-200">{a.title}</div>
+                  <div className="heading-200">{g.title}</div>
                   <div className="body-200 muted" style={{ marginTop: 2 }}>
-                    {done ? 'Accepted · tap to review' : a.subtitle}
+                    {done ? "Accepted · tap to review" : `${g.subtitle}${docCountLabel}`}
                   </div>
                 </div>
                 <Icon name="Chevron right" size={16} color="rgb(var(--neutral-400))" />
               </button>
-            )
+            );
           })}
         </div>
 
         <div className="prior-consents">
           <div className="prior-consents-header">
             <Icon name="Check circle" size={16} color="rgb(var(--success-500))" />
-            <span className="heading-100" style={{ color: 'rgb(var(--neutral-700))' }}>
+            <span className="heading-100" style={{ color: "rgb(var(--neutral-700))" }}>
               Previously agreed
             </span>
           </div>
-          <p className="body-200 muted" style={{ margin: '4px 0 10px' }}>
+          <p className="body-200 muted" style={{ margin: "4px 0 10px" }}>
             From your prior Partner application. No action needed.
           </p>
           <div className="stack-sm">
@@ -117,26 +119,21 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
       </div>
 
       <div className="screen-footer">
-        <button
-          className="btn btn-primary"
-          onClick={onContinue}
-          disabled={!allDone}
-        >
-          {allDone ? 'Continue' : `Accept ${agreementDefs.length - accepted.size} more`}
+        <button className="btn btn-primary" onClick={onContinue} disabled={!allDone}>
+          {allDone ? "Continue" : `Accept ${disclosureGroups.length - accepted.size} more`}
           {allDone && <Icon name="Arrow right" size={18} />}
         </button>
       </div>
 
       <DisclosureSheet
-        open={activeAgreement !== null}
-        title={activeAgreement?.title}
-        file={activeAgreement?.file}
+        open={activeGroup !== null}
+        group={activeGroup}
         alreadyAccepted={openId ? accepted.has(openId) : false}
         onClose={() => setOpenId(null)}
         onAccept={acceptCurrent}
       />
     </div>
-  )
+  );
 }
 
 function StepDots({ current, total }: { current: number; total: number }) {
@@ -145,9 +142,9 @@ function StepDots({ current, total }: { current: number; total: number }) {
       {Array.from({ length: total }).map((_, i) => (
         <span
           key={i}
-          className={`step-dot ${i === current ? 'active' : i < current ? 'done' : ''}`}
+          className={`step-dot ${i === current ? "active" : i < current ? "done" : ""}`}
         />
       ))}
     </div>
-  )
+  );
 }

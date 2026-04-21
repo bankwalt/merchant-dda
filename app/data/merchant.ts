@@ -67,11 +67,17 @@ export interface Merchant {
   settlement: Settlement;
 }
 
-export interface AgreementDef {
+export interface DisclosureDoc {
+  id: string;
+  title: string;
+  file: string;
+}
+
+export interface DisclosureGroup {
   id: string;
   title: string;
   subtitle: string;
-  file: string;
+  docs: DisclosureDoc[];
 }
 
 export interface PriorConsent {
@@ -173,30 +179,40 @@ export function formatCurrency(n: number | string | null | undefined): string {
   return `$${Number(n).toLocaleString("en-US")}`;
 }
 
-export const agreementDefs: AgreementDef[] = [
+export const disclosureGroups: DisclosureGroup[] = [
   {
-    id: "deposit",
-    title: "Deposit Account Terms & Conditions",
-    subtitle: "Governs your Partner Business Anywhere account (DDA)",
-    file: "/disclosures/deposit.html",
-  },
-  {
-    id: "savings",
-    title: "Business Savings Disclosure",
-    subtitle: "2.00% APY · $50 min · Truth in Savings + FDIC",
-    file: "/disclosures/savings.html",
-  },
-  {
-    id: "fees",
-    title: "Account Fee Schedule",
-    subtitle: "Fees for DDA, Savings, and Debit Card",
-    file: "/disclosures/fees.html",
+    id: "deposit-account",
+    title: "Deposit Account",
+    subtitle: "Covers account terms, savings, and fee schedule",
+    docs: [
+      {
+        id: "deposit",
+        title: "Account Terms",
+        file: "/disclosures/deposit.html",
+      },
+      {
+        id: "savings",
+        title: "Savings",
+        file: "/disclosures/savings.html",
+      },
+      {
+        id: "fees",
+        title: "Fees",
+        file: "/disclosures/fees.html",
+      },
+    ],
   },
   {
     id: "debit-card",
-    title: "Visa Business Debit Card Agreement",
+    title: "Debit Card",
     subtitle: "Terms for your Business Anytime debit card",
-    file: "/disclosures/debit-card.html",
+    docs: [
+      {
+        id: "debit-card",
+        title: "Visa Business Debit Card Agreement",
+        file: "/disclosures/debit-card.html",
+      },
+    ],
   },
 ];
 
