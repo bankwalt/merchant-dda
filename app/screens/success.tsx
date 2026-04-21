@@ -1,6 +1,11 @@
-import { Icon } from '../components/Icon.jsx'
+import { Icon } from "../components/icon";
 
-export function Success({ onOpenDashboard, onRestart }) {
+interface SuccessProps {
+  onOpenDashboard: () => void;
+  onRestart: () => void;
+}
+
+export function Success({ onOpenDashboard, onRestart }: SuccessProps) {
   return (
     <div className="screen success-screen">
       <div className="success-confetti" aria-hidden="true" />
@@ -10,22 +15,17 @@ export function Success({ onOpenDashboard, onRestart }) {
           <Icon name="Check circle" size={56} color="rgb(var(--success-500))" />
         </div>
 
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: "center" }}>
           <h1 className="heading-600" style={{ margin: 0 }}>
             You're all set.
           </h1>
-          <p className="body-500 muted" style={{ margin: '8px 0 0' }}>
+          <p className="body-500 muted" style={{ margin: "8px 0 0" }}>
             Your Partner Business Anywhere and Savings accounts are open.
           </p>
         </div>
 
         <div className="success-cards">
-          <AccountCard
-            label="Business Anywhere"
-            mask="••4201"
-            amount="$0.00"
-            apy="0.00% APY"
-          />
+          <AccountCard label="Business Anywhere" mask="••4201" amount="$0.00" apy="0.00% APY" />
           <AccountCard
             label="Savings"
             mask="••4202"
@@ -56,12 +56,20 @@ export function Success({ onOpenDashboard, onRestart }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-function AccountCard({ label, mask, amount, apy, highlight }) {
+interface AccountCardProps {
+  label: string;
+  mask: string;
+  amount: string;
+  apy: string;
+  highlight?: boolean;
+}
+
+function AccountCard({ label, mask, amount, apy, highlight }: AccountCardProps) {
   return (
-    <div className={`account-card ${highlight ? 'is-highlight' : ''}`}>
+    <div className={`account-card ${highlight ? "is-highlight" : ""}`}>
       <div className="body-300 muted">{label}</div>
       <div className="heading-500" style={{ marginTop: 4 }}>
         {amount}
@@ -70,7 +78,7 @@ function AccountCard({ label, mask, amount, apy, highlight }) {
         <span className="body-200 muted">{mask}</span>
         <span
           className="body-300"
-          style={{ color: highlight ? 'rgb(var(--success-700))' : 'rgb(var(--neutral-600))' }}
+          style={{ color: highlight ? "rgb(var(--success-700))" : "rgb(var(--neutral-600))" }}
         >
           {apy}
         </span>
@@ -79,16 +87,21 @@ function AccountCard({ label, mask, amount, apy, highlight }) {
         First Internet Bank, Member FDIC · Routing 074920912
       </div>
     </div>
-  )
+  );
 }
 
-function VirtualCard({ mask, network }) {
+interface VirtualCardProps {
+  mask: string;
+  network: string;
+}
+
+function VirtualCard({ mask, network }: VirtualCardProps) {
   const addToAppleWallet = () => {
     // TODO: call Lithic push provisioning → pass encrypted payload to native iOS In-App Provisioning SDK
-  }
+  };
   const addToGoogleWallet = () => {
     // TODO: call Lithic push provisioning → Google Pay Push Provisioning API
-  }
+  };
 
   return (
     <div className="virtual-card">
@@ -129,10 +142,16 @@ function VirtualCard({ mask, network }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-function NextItem({ icon, title, sub }) {
+interface NextItemProps {
+  icon: string;
+  title: string;
+  sub: string;
+}
+
+function NextItem({ icon, title, sub }: NextItemProps) {
   return (
     <div className="next-item">
       <div className="next-item-icon">
@@ -143,5 +162,5 @@ function NextItem({ icon, title, sub }) {
         <div className="body-200 muted">{sub}</div>
       </div>
     </div>
-  )
+  );
 }

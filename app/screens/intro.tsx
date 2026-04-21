@@ -1,6 +1,10 @@
-import { Icon } from '../components/Icon.jsx'
+import { Icon } from "../components/icon";
 
-export function Intro({ onContinue }) {
+interface IntroProps {
+  onContinue: () => void;
+}
+
+export function Intro({ onContinue }: IntroProps) {
   return (
     <div className="screen">
       <div className="intro-hero">

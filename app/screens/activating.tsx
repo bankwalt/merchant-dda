@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Icon } from '../components/Icon.jsx'
+import { useEffect, useState } from "react";
+import { Icon } from "../components/icon";
 
 const steps = [
   { key: 'open', label: 'Opening your DDA' },
@@ -8,8 +8,12 @@ const steps = [
   { key: 'done', label: 'Ready' },
 ]
 
-export function Activating({ onDone }) {
-  const [idx, setIdx] = useState(0)
+interface ActivatingProps {
+  onDone: () => void;
+}
+
+export function Activating({ onDone }: ActivatingProps) {
+  const [idx, setIdx] = useState(0);
 
   useEffect(() => {
     if (idx >= steps.length - 1) {

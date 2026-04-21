@@ -1,40 +1,59 @@
-import { useState } from 'react'
-import { Icon } from '../components/Icon.jsx'
-import { EditSheet } from '../components/EditSheet.jsx'
-import { BusinessForm } from '../components/BusinessForm.jsx'
-import { ApplicantForm } from '../components/ApplicantForm.jsx'
+import { useState } from "react";
+import { Icon } from "../components/icon";
+import { EditSheet } from "../components/edit-sheet";
+import { BusinessForm } from "../components/business-form";
+import { ApplicantForm } from "../components/applicant-form";
 import {
   businessTypeOptions,
   formatPhoneDisplay,
   maskTaxId,
-} from '../data/merchant.js'
+  type Applicant,
+  type Business,
+  type Merchant,
+} from "../data/merchant";
 
-export function Review({ merchant, onUpdateBusiness, onUpdateApplicant, onBack, onContinue }) {
-  const [editing, setEditing] = useState(null)
+interface ReviewProps {
+  merchant: Merchant;
+  onUpdateBusiness: (business: Business) => void;
+  onUpdateApplicant: (applicant: Applicant) => void;
+  onBack: () => void;
+  onContinue: () => void;
+}
 
-  const { business, applicant, externalBank } = merchant
+type EditingTarget = "business" | "applicant" | null;
+
+export function Review({
+  merchant,
+  onUpdateBusiness,
+  onUpdateApplicant,
+  onBack,
+  onContinue,
+}: ReviewProps) {
+  const [editing, setEditing] = useState<EditingTarget>(null);
+
+  const { business, applicant, externalBank } = merchant;
 
   const businessTypeLabel =
     businessTypeOptions.find((o) => o.value === business.businessType)?.label ||
-    business.businessType
+    business.businessType;
 
   const businessAddress = [
     business.address.street,
     business.address.city,
-    [business.address.state, business.address.zip].filter(Boolean).join(' '),
+    [business.address.state, business.address.zip].filter(Boolean).join(" "),
   ]
     .filter(Boolean)
-    .join(', ')
+    .join(", ");
 
   const applicantName = [applicant.firstName, applicant.middleName, applicant.lastName]
     .filter(Boolean)
-    .join(' ')
+    .join(" ");
   const ownershipPct = applicant.ownershipFraction
     ? `${Math.round(applicant.ownershipFraction * 100)}%`
-    : null
+    : null;
   const applicantSubtitle = [applicant.title, ownershipPct ? `${ownershipPct} owner` : null]
     .filter(Boolean)
-    .join(' · ')
+    .join(" · ");
 
   return (
     <div className="screen">
@@ -48,10 +67,10 @@ export function Review({ merchant, onUpdateBusiness, onUpdateApplicant, onBack, 
 
       <div className="screen-body stack-lg">
         <div>
-          <h1 className="heading-600" style={{ margin: 0, letterSpacing: '-0.01em' }}>
+          <h1 className="heading-600" style={{ margin: 0, letterSpacing: "-0.01em" }}>
             Let's confirm your details.
           </h1>
-          <p className="body-400 muted" style={{ margin: '6px 0 0' }}>
+          <p className="body-400 muted" style={{ margin: "6px 0 0" }}>
             We pulled this from another application. Tap any row to edit.
           </p>
         </div>
@@ -64,14 +83,14 @@ export function Review({ merchant, onUpdateBusiness, onUpdateApplicant, onBack, 
             business.taxIdType,
           )}`}
           meta={businessAddress}
-          onClick={() => setEditing('business')}
+          onClick={() => setEditing("business")}
         />
         <Row
           icon="User"
           title={applicantName}
           subtitle={applicantSubtitle}
           meta={`${applicant.taxIdType} ${maskTaxId(applicant.taxId, applicant.taxIdType)} · ${formatPhoneDisplay(applicant.phone)}`}
-          onClick={() => setEditing('applicant')}
+          onClick={() => setEditing("applicant")}
         />
         <Row
           icon="Library"
@@ -96,7 +115,7 @@ export function Review({ merchant, onUpdateBusiness, onUpdateApplicant, onBack, 
       </div>
 
       <EditSheet
-        open={editing === 'business'}
+        open={editing === "business"}
         eyebrow="Business object"
         title="Edit business details"
         onClose={() => setEditing(null)}
@@ -104,15 +123,15 @@ export function Review({ merchant, onUpdateBusiness, onUpdateApplicant, onBack, 
         <BusinessForm
           value={business}
           onSave={(next) => {
-            onUpdateBusiness(next)
-            setEditing(null)
+            onUpdateBusiness(next);
+            setEditing(null);
           }}
           onCancel={() => setEditing(null)}
         />
       </EditSheet>
 
       <EditSheet
-        open={editing === 'applicant'}
+        open={editing === "applicant"}
         eyebrow="Applicant · primary owner"
         title="Edit owner details"
         onClose={() => setEditing(null)}
@@ -120,17 +139,25 @@ export function Review({ merchant, onUpdateBusiness, onUpdateApplicant, onBack, 
         <ApplicantForm
           value={applicant}
           onSave={(next) => {
-            onUpdateApplicant(next)
-            setEditing(null)
+            onUpdateApplicant(next);
+            setEditing(null);
           }}
           onCancel={() => setEditing(null)}
         />
       </EditSheet>
     </div>
-  )
+  );
 }
 
-function Row({ icon, title, subtitle, meta, onClick }) {
+interface RowProps {
+  icon: string;
+  title: string;
+  subtitle: string;
+  meta: string;
+  onClick?: () => void;
+}
+
+function Row({ icon, title, subtitle, meta, onClick }: RowProps) {
   return (
     <button className="review-row" type="button" onClick={onClick} disabled={!onClick}>
       <div className="review-row-icon">
@@ -147,22 +174,20 @@ function Row({ icon, title, subtitle, meta, onClick }) {
           {meta}
         </div>
       </div>
-      {onClick && (
-        <Icon name="Chevron right" size={18} color="rgb(var(--neutral-500))" />
-      )}
+      {onClick && <Icon name="Chevron right" size={18} color="rgb(var(--neutral-500))" />}
     </button>
-  )
+  );
 }
 
-function StepDots({ current, total }) {
+function StepDots({ current, total }: { current: number; total: number }) {
   return (
     <div className="step-dots">
       {Array.from({ length: total }).map((_, i) => (
         <span
           key={i}
-          className={`step-dot ${i === current ? 'active' : i < current ? 'done' : ''}`}
+          className={`step-dot ${i === current ? "active" : i < current ? "done" : ""}`}
         />
       ))}
     </div>
-  )
+  );
 }

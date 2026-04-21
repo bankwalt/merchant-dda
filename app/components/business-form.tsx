@@ -1,28 +1,33 @@
-import { useState } from 'react'
-import { Icon } from './Icon.jsx'
-import { Field, ReadonlyRow, Section, TextInput } from './FormFields.jsx'
+import { useState } from "react";
+import { Icon } from "./icon";
+import { Field, ReadonlyRow, Section, TextInput } from "./form-fields";
 import {
   businessTypeOptions,
   formatCurrency,
   formatPhoneDisplay,
   maskTaxId,
-} from '../data/merchant.js'
+  type Business,
+} from "../data/merchant";
 
-export function BusinessForm({ value, onSave, onCancel }) {
+interface BusinessFormProps {
+  value: Business;
+  onSave: (next: Business) => void;
+  onCancel: () => void;
+}
+
+export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
   const [draft, setDraft] = useState({
     phone: value.phone,
     email: value.email,
-  })
-  const set = (key, v) => setDraft((d) => ({ ...d, [key]: v }))
+  });
+  const set = <K extends keyof typeof draft>(key: K, v: (typeof draft)[K]) =>
+    setDraft((d) => ({ ...d, [key]: v }));
 
   const businessTypeLabel =
-    businessTypeOptions.find((o) => o.value === value.businessType)?.label ||
-    value.businessType
-  const addressLine1 = [value.address.street, value.address.street2]
-    .filter(Boolean)
-    .join(', ')
-  const addressLine2 = `${value.address.city}, ${value.address.state} ${value.address.zip}`
-  const dirty = draft.phone !== value.phone || draft.email !== value.email
+    businessTypeOptions.find((o) => o.value === value.businessType)?.label || value.businessType;
+  const addressLine1 = [value.address.street, value.address.street2].filter(Boolean).join(", ");
+  const addressLine2 = `${value.address.city}, ${value.address.state} ${value.address.zip}`;
+  const dirty = draft.phone !== value.phone || draft.email !== value.email;
 
   return (
     <>
@@ -30,16 +35,16 @@ export function BusinessForm({ value, onSave, onCancel }) {
         <div className="form-lock-notice">
           <Icon name="Lock closed" size={14} color="rgb(var(--neutral-600))" />
           <span className="body-200 muted-strong">
-            Locked details came from your earlier application. Update email or
-            phone to change how we reach you.
+            Locked details came from your earlier application. Update email or phone to change how
+            we reach you.
           </span>
         </div>
 
         <form
           className="form stack-lg"
           onSubmit={(e) => {
-            e.preventDefault()
-            onSave({ ...value, ...draft })
+            e.preventDefault();
+            onSave({ ...value, ...draft });
           }}
         >
           <Section title="Business identity">
@@ -51,7 +56,7 @@ export function BusinessForm({ value, onSave, onCancel }) {
 
           <Section title="Tax information">
             <ReadonlyRow
-              label={value.taxIdType === 'EIN' ? 'EIN' : 'SSN'}
+              label={value.taxIdType === "EIN" ? "EIN" : "SSN"}
               value={maskTaxId(value.taxId, value.taxIdType)}
               hint="Masked for your security"
             />
@@ -67,7 +72,7 @@ export function BusinessForm({ value, onSave, onCancel }) {
               <TextInput
                 type="tel"
                 value={draft.phone}
-                onChange={(v) => set('phone', v)}
+                onChange={(v) => set("phone", v)}
                 inputMode="tel"
                 autoComplete="tel"
                 placeholder="+1 415 555 1234"
@@ -78,7 +83,7 @@ export function BusinessForm({ value, onSave, onCancel }) {
               <TextInput
                 type="email"
                 value={draft.email}
-                onChange={(v) => set('email', v)}
+                onChange={(v) => set("email", v)}
                 inputMode="email"
                 autoComplete="email"
               />
@@ -117,22 +122,22 @@ export function BusinessForm({ value, onSave, onCancel }) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-function PhoneHint({ value }) {
-  const formatted = formatPhoneDisplay(value)
-  if (!formatted || formatted === value) return null
+function PhoneHint({ value }: { value: string }) {
+  const formatted = formatPhoneDisplay(value);
+  if (!formatted || formatted === value) return null;
   return (
     <span className="body-200 muted" style={{ marginTop: 4 }}>
       {formatted}
     </span>
-  )
+  );
 }
 
-function formatDate(iso) {
-  if (!iso) return ''
-  const [y, m, d] = iso.split('-')
-  if (!y || !m || !d) return iso
-  return `${m}/${d}/${y}`
+function formatDate(iso: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  if (!y || !m || !d) return iso;
+  return `${m}/${d}/${y}`;
 }

@@ -1,32 +1,54 @@
-import { useMemo, useState } from 'react'
-import { Icon } from './Icon.jsx'
+import { useMemo, useState } from "react";
+import { Icon } from "./icon";
 
-const CADENCES = [
-  { value: 'daily', label: 'Daily', perMonth: 30 },
-  { value: 'weekly', label: 'Weekly', perMonth: 4 },
-  { value: 'monthly', label: 'Monthly', perMonth: 1 },
-]
+export type SavingsCadence = "daily" | "weekly" | "monthly";
 
-export function SavingsForm({ value, onSave, onDisable, onCancel }) {
-  const [draft, setDraft] = useState({
+export interface SavingsConfig {
+  enabled: boolean;
+  amount: number;
+  cadence: SavingsCadence;
+}
+
+const CADENCES: { value: SavingsCadence; label: string; perMonth: number }[] = [
+  { value: "daily", label: "Daily", perMonth: 30 },
+  { value: "weekly", label: "Weekly", perMonth: 4 },
+  { value: "monthly", label: "Monthly", perMonth: 1 },
+];
+
+interface SavingsFormProps {
+  value: SavingsConfig | null | undefined;
+  onSave: (next: SavingsConfig) => void;
+  onDisable: () => void;
+  onCancel: () => void;
+}
+
+export function SavingsForm({ value, onSave, onDisable, onCancel }: SavingsFormProps) {
+  const [draft, setDraft] = useState<{
+    enabled: boolean;
+    amount: number | string;
+    cadence: SavingsCadence;
+  }>({
     enabled: true,
     amount: value?.amount ?? 200,
-    cadence: value?.cadence ?? 'monthly',
-  })
+    cadence: value?.cadence ?? "monthly",
+  });
 
   const monthly = useMemo(() => {
-    const c = CADENCES.find((x) => x.value === draft.cadence)
-    return Math.round((Number(draft.amount) || 0) * (c?.perMonth ?? 1))
-  }, [draft.amount, draft.cadence])
+    const c = CADENCES.find((x) => x.value === draft.cadence);
+    return Math.round((Number(draft.amount) || 0) * (c?.perMonth ?? 1));
+  }, [draft.amount, draft.cadence]);
 
-  const belowMin = monthly < 50
-  const wasEnabled = Boolean(value?.enabled)
+  const belowMin = monthly < 50;
+  const wasEnabled = Boolean(value?.enabled);
 
   return (
     <>
       <div className="sheet-body sheet-body-form">
         <div className="savings-preview">
-          <div className="body-200 muted-strong" style={{ textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div
+            className="body-200 muted-strong"
+            style={{ textTransform: "uppercase", letterSpacing: "0.08em" }}
+          >
             You'll save
           </div>
           <div className="savings-preview-amount">
@@ -59,7 +81,7 @@ export function SavingsForm({ value, onSave, onDisable, onCancel }) {
                   <button
                     key={p}
                     type="button"
-                    className={`amount-preset ${Number(draft.amount) === p ? 'is-active' : ''}`}
+                    className={`amount-preset ${Number(draft.amount) === p ? "is-active" : ""}`}
                     onClick={() => setDraft((d) => ({ ...d, amount: p }))}
                   >
                     ${p}
@@ -76,16 +98,16 @@ export function SavingsForm({ value, onSave, onDisable, onCancel }) {
                 <button
                   key={c.value}
                   type="button"
-                  className={`cadence-tile ${draft.cadence === c.value ? 'is-active' : ''}`}
+                  className={`cadence-tile ${draft.cadence === c.value ? "is-active" : ""}`}
                   onClick={() => setDraft((d) => ({ ...d, cadence: c.value }))}
                 >
                   <div className="heading-200">{c.label}</div>
                   <div className="body-200 muted">
-                    {c.value === 'daily'
-                      ? 'Each business day'
-                      : c.value === 'weekly'
-                        ? 'Every Monday'
-                        : '1st of the month'}
+                    {c.value === "daily"
+                      ? "Each business day"
+                      : c.value === "weekly"
+                        ? "Every Monday"
+                        : "1st of the month"}
                   </div>
                 </button>
               ))}
@@ -95,10 +117,9 @@ export function SavingsForm({ value, onSave, onDisable, onCancel }) {
           {belowMin && (
             <div className="form-warning">
               <Icon name="Information circle" size={16} color="rgb(var(--warning-800))" />
-              <span className="body-200" style={{ color: 'rgb(var(--warning-800))' }}>
-                Partner Savings needs at least <strong>$50 / month</strong> to earn
-                the 2.00% APY. Bump up the amount or cadence to clear the
-                minimum.
+              <span className="body-200" style={{ color: "rgb(var(--warning-800))" }}>
+                Partner Savings needs at least <strong>$50 / month</strong> to earn the 2.00% APY.
+                Bump up the amount or cadence to clear the minimum.
               </span>
             </div>
           )}
@@ -126,15 +147,15 @@ export function SavingsForm({ value, onSave, onDisable, onCancel }) {
               })
             }
           >
-            {wasEnabled ? 'Save changes' : 'Turn on auto-save'}
+            {wasEnabled ? "Save changes" : "Turn on auto-save"}
             <Icon name="Check" size={18} />
           </button>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-function formatCurrency(n) {
-  return `$${Number(n || 0).toLocaleString('en-US')}`
+function formatCurrency(n: number | string | null | undefined): string {
+  return `$${Number(n || 0).toLocaleString("en-US")}`;
 }

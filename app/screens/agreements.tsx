@@ -1,11 +1,16 @@
-import { useState } from 'react'
-import { Icon } from '../components/Icon.jsx'
-import { DisclosureSheet } from '../components/DisclosureSheet.jsx'
-import { agreementDefs, priorConsents } from '../data/merchant.js'
+import { useState } from "react";
+import { Icon } from "../components/icon";
+import { DisclosureSheet } from "../components/disclosure-sheet";
+import { agreementDefs, priorConsents } from "../data/merchant";
 
-export function Agreements({ onBack, onContinue }) {
-  const [accepted, setAccepted] = useState(() => new Set())
-  const [openId, setOpenId] = useState(null)
+interface AgreementsProps {
+  onBack: () => void;
+  onContinue: () => void;
+}
+
+export function Agreements({ onBack, onContinue }: AgreementsProps) {
+  const [accepted, setAccepted] = useState<Set<string>>(() => new Set());
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const allDone = accepted.size === agreementDefs.length
   const activeAgreement = agreementDefs.find((a) => a.id === openId) || null
@@ -134,7 +139,7 @@ export function Agreements({ onBack, onContinue }) {
   )
 }
 
-function StepDots({ current, total }) {
+function StepDots({ current, total }: { current: number; total: number }) {
   return (
     <div className="step-dots">
       {Array.from({ length: total }).map((_, i) => (
