@@ -1,4 +1,13 @@
-export function Icon({ name, size = 20, color, style }) {
+import type { CSSProperties } from "react";
+
+interface IconProps {
+  name: string;
+  size?: number;
+  color?: string;
+  style?: CSSProperties;
+}
+
+export function Icon({ name, size = 20, color, style }: IconProps) {
   return (
     <span
       className="icon"
@@ -6,7 +15,7 @@ export function Icon({ name, size = 20, color, style }) {
         width: size,
         height: size,
         color,
-        display: 'inline-flex',
+        display: "inline-flex",
         ...style,
       }}
       aria-hidden="true"
@@ -16,8 +25,8 @@ export function Icon({ name, size = 20, color, style }) {
         width={size}
         height={size}
         alt=""
-        style={{ display: 'block' }}
+        style={{ display: "block" }}
       />
     </span>
-  )
+  );
 }

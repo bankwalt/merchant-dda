@@ -1,23 +1,31 @@
-import { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
-import { Icon } from './Icon.jsx'
+import { useEffect, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { Icon } from "./icon";
 
-export function EditSheet({ open, eyebrow, title, onClose, children }) {
-  const [mountEl, setMountEl] = useState(null)
+interface EditSheetProps {
+  open: boolean;
+  eyebrow?: string;
+  title: string;
+  onClose: () => void;
+  children: ReactNode;
+}
+
+export function EditSheet({ open, eyebrow, title, onClose, children }: EditSheetProps) {
+  const [mountEl, setMountEl] = useState<Element | null>(null);
 
   useEffect(() => {
-    if (!open) return
-    setMountEl(document.querySelector('.phone'))
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose?.()
-    }
-    window.addEventListener('keydown', onKey)
+    if (!open) return;
+    setMountEl(document.querySelector(".phone"));
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose?.();
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [open, onClose])
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open, onClose]);
 
-  if (!open || !mountEl) return null
+  if (!open || !mountEl) return null;
 
   return createPortal(
     <div className="sheet-root" role="dialog" aria-modal="true" aria-label={title}>
@@ -29,7 +37,7 @@ export function EditSheet({ open, eyebrow, title, onClose, children }) {
             {eyebrow && (
               <div
                 className="body-200 muted-strong"
-                style={{ textTransform: 'uppercase', letterSpacing: '0.06em' }}
+                style={{ textTransform: "uppercase", letterSpacing: "0.06em" }}
               >
                 {eyebrow}
               </div>
@@ -44,5 +52,5 @@ export function EditSheet({ open, eyebrow, title, onClose, children }) {
       </div>
     </div>,
     mountEl,
-  )
+  );
 }
