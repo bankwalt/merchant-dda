@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "fees",
+    "source": "Account Fee Schedule v1.1.docx",
+    "title": "Fee Schedule",
+    "isDraft": true
+  },
+  {
+    "slug": "deposit",
+    "source": "Deposit Account TC SMB DDA v1.2.docx",
+    "title": "Deposit Account Terms &amp; Conditions",
+    "isDraft": true
+  },
+  {
+    "slug": "savings",
+    "source": "Partner Business Savings Disclosure v1.1.docx",
+    "title": "Business Savings Account Disclosure",
+    "isDraft": true
+  },
+  {
+    "slug": "debit-card",
+    "source": "Visa Business Debit Card Agreement v1.0.docx",
+    "title": "Visa® Business Debit Card Agreement",
+    "isDraft": true
+  }
+]

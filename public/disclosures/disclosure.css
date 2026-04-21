@@ -1,0 +1,148 @@
+/* Shared stylesheet for disclosure HTML documents.
+   Loaded via <link rel="stylesheet" href="/disclosures/disclosure.css">.
+   Self-contained so each disclosure file renders correctly in an
+   iframe (or when opened directly by Compliance for review). */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+:root {
+  --primary-500: 0 82 255;
+  --primary-700: 0 47 219;
+  --neutral-500: 148 163 184;
+  --neutral-600: 100 116 139;
+  --neutral-700: 51 65 85;
+  --neutral-800: 30 41 59;
+  --neutral-900: 10 19 44;
+  --neutral-200: 241 245 249;
+  --neutral-100: 248 250 252;
+  --warning-200: 252 246 218;
+  --warning-800: 145 127 41;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: rgb(var(--neutral-100));
+  color: rgb(var(--neutral-900));
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.disclosure {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+.disclosure-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--primary-700));
+  margin: 0 0 10px;
+}
+
+.disclosure h1 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  color: rgb(var(--neutral-900));
+}
+
+.disclosure h2 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 28px 0 10px;
+  color: rgb(var(--neutral-900));
+}
+
+.disclosure h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 6px;
+  color: rgb(var(--neutral-800));
+}
+
+.disclosure p {
+  margin: 0 0 14px;
+  color: rgb(var(--neutral-700));
+}
+
+.disclosure ul, .disclosure ol {
+  margin: 0 0 14px;
+  padding-left: 20px;
+  color: rgb(var(--neutral-700));
+}
+
+.disclosure li { margin: 4px 0; }
+
+.disclosure strong { color: rgb(var(--neutral-900)); font-weight: 600; }
+
+.disclosure .meta {
+  font-size: 12px;
+  color: rgb(var(--neutral-600));
+  margin: 4px 0 20px;
+}
+
+.disclosure .draft-banner {
+  background: rgb(var(--warning-200));
+  color: rgb(var(--warning-800));
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+.disclosure hr {
+  border: none;
+  border-top: 1px solid rgb(var(--neutral-200));
+  margin: 24px 0;
+}
+
+.disclosure a {
+  color: rgb(var(--primary-500));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.disclosure dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 14px 0;
+}
+.disclosure dt {
+  font-weight: 600;
+  color: rgb(var(--neutral-800));
+}
+.disclosure dd {
+  margin: 0;
+  color: rgb(var(--neutral-700));
+}
+
+.disclosure table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 14px 0;
+}
+.disclosure th, .disclosure td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgb(var(--neutral-200));
+}
+.disclosure th {
+  background: rgb(var(--neutral-100));
+  font-weight: 600;
+  color: rgb(var(--neutral-800));
+}

@@ -1,0 +1,66 @@
+/* Jaris Design System — Color Palette
+   Source: @jarisinc/design-system src/theme/palette.css
+   RGB channels are stored space-separated so that Tailwind-style
+   `rgb(var(--primary-500) / <alpha-value>)` works. */
+
+:root {
+  --modal: 17 17 17;
+
+  --white: 255 255 255;
+  --black: 17 17 17;
+
+  --neutral-100: 248 250 252;
+  --neutral-200: 241 245 249;
+  --neutral-300: 226 232 240;
+  --neutral-400: 203 213 225;
+  --neutral-500: 148 163 184;
+  --neutral-600: 100 116 139;
+  --neutral-700: 51 65 85;
+  --neutral-800: 30 41 59;
+  --neutral-900: 10 19 44;
+
+  --primary-100: 240 246 255;
+  --primary-200: 199 204 255;
+  --primary-300: 159 172 255;
+  --primary-400: 123 158 249;
+  --primary-500: 0 82 255;   /* Jaris Blue */
+  --primary-600: 0 60 230;
+  --primary-700: 0 47 219;
+  --primary-800: 0 18 203;
+  --primary-900: 27 41 109;
+
+  --secondary-100: 212 230 224;
+  --secondary-200: 170 206 194;
+  --secondary-300: 127 181 163;
+  --secondary-400: 85 157 133;
+  --secondary-500: 42 132 102;
+  --secondary-600: 34 106 82;
+  --secondary-700: 25 79 61;
+  --secondary-800: 17 53 41;
+  --secondary-900: 8 26 20;
+
+  --info-200: 237 220 251;
+  --info-300: 211 167 244;
+  --info-500: 167 78 233;
+  --info-600: 123 17 202;
+  --info-700: 100 47 140;
+  --info-800: 50 23 70;
+
+  --success-200: 234 243 240;
+  --success-300: 170 206 194;
+  --success-500: 42 132 102;
+  --success-700: 34 106 82;
+  --success-800: 25 79 61;
+
+  --warning-200: 252 246 218;
+  --warning-300: 247 229 143;
+  --warning-500: 242 212 69;
+  --warning-700: 194 170 55;
+  --warning-800: 145 127 41;
+
+  --error-200: 252 218 218;
+  --error-300: 247 145 145;
+  --error-500: 241 72 71;
+  --error-700: 193 58 57;
+  --error-800: 96 29 28;
+}
