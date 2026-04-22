@@ -646,6 +646,28 @@
   text-align: center;
 }
 
+.sheet-hint-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.sheet-mark-read {
+  background: none;
+  border: 0;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--primary-700));
+  cursor: pointer;
+}
+
+.sheet-mark-read:hover,
+.sheet-mark-read:focus-visible {
+  text-decoration: underline;
+}
+
 /* ===== Edit Sheet (form) ===== */
 
 .edit-sheet .sheet-body {

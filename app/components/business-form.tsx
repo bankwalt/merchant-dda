@@ -7,6 +7,8 @@ import {
   formatCurrency,
   formatPhoneDisplay,
   maskTaxId,
+  validateEmail,
+  validatePhone,
   type Business,
 } from "../data/merchant";
 
@@ -30,6 +32,9 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
   const addressLine2 = `${value.address.city}, ${value.address.state} ${value.address.zip}`;
   const dirty = draft.phone !== value.phone || draft.email !== value.email;
   const [supportOpen, setSupportOpen] = useState(false);
+  const phoneError = draft.phone ? validatePhone(draft.phone) : null;
+  const emailError = draft.email ? validateEmail(draft.email) : null;
+  const canSave = dirty && !phoneError && !emailError;
 
   return (
     <>
@@ -70,7 +75,11 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
           </Section>
 
           <Section title="Contact">
-            <Field label="Business phone" hint="We'll text a verification code here">
+            <Field
+              label="Business phone"
+              hint="We'll text a verification code here"
+              error={phoneError ?? undefined}
+            >
               <TextInput
                 type="tel"
                 value={draft.phone}
@@ -79,9 +88,13 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
                 autoComplete="tel"
                 placeholder="+1 415 555 1234"
               />
-              <PhoneHint value={draft.phone} />
+              {!phoneError && <PhoneHint value={draft.phone} />}
             </Field>
-            <Field label="Business email" hint="For statements and account notices">
+            <Field
+              label="Business email"
+              hint="For statements and account notices"
+              error={emailError ?? undefined}
+            >
               <TextInput
                 type="email"
                 value={draft.email}
@@ -126,7 +139,7 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
             type="button"
             className="btn btn-primary"
             onClick={() => onSave({ ...value, ...draft })}
-            disabled={!dirty}
+            disabled={!canSave}
           >
             Save changes
             <Icon name="Check" size={18} />

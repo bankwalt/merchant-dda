@@ -158,6 +158,20 @@ export const initialMerchant: Merchant = {
   },
 };
 
+export function validateEmail(email: string): string | null {
+  if (!email) return "Email is required.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Enter a valid email address.";
+  return null;
+}
+
+export function validatePhone(phone: string): string | null {
+  const digits = (phone ?? "").replace(/\D/g, "");
+  if (!digits) return "Phone is required.";
+  const national = digits.length === 11 && digits.startsWith("1") ? digits.slice(1) : digits;
+  if (national.length !== 10) return "Enter a 10-digit US number.";
+  return null;
+}
+
 export function formatPhoneDisplay(e164: string | undefined | null): string {
   if (!e164) return "";
   const digits = e164.replace(/\D/g, "");

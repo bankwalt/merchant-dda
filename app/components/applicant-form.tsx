@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Icon } from "./icon";
 import { Field, ReadonlyRow, Section, TextInput } from "./form-fields";
 import { SupportSheet } from "./support-sheet";
-import { formatPhoneDisplay, maskTaxId, type Applicant } from "../data/merchant";
+import {
+  formatPhoneDisplay,
+  maskTaxId,
+  validateEmail,
+  validatePhone,
+  type Applicant,
+} from "../data/merchant";
 
 interface ApplicantFormProps {
   value: Applicant;
@@ -25,6 +31,9 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
     value.ownershipFraction != null ? `${Math.round(value.ownershipFraction * 100)}%` : "";
   const dirty = draft.phone !== value.phone || draft.email !== value.email;
   const [supportOpen, setSupportOpen] = useState(false);
+  const phoneError = draft.phone ? validatePhone(draft.phone) : null;
+  const emailError = draft.email ? validateEmail(draft.email) : null;
+  const canSave = dirty && !phoneError && !emailError;
 
   return (
     <>
@@ -64,7 +73,11 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
           </Section>
 
           <Section title="Contact">
-            <Field label="Cell phone" hint="We'll text login codes here">
+            <Field
+              label="Cell phone"
+              hint="We'll text login codes here"
+              error={phoneError ?? undefined}
+            >
               <TextInput
                 type="tel"
                 value={draft.phone}
@@ -72,9 +85,13 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
                 inputMode="tel"
                 autoComplete="tel"
               />
-              <PhoneHint value={draft.phone} />
+              {!phoneError && <PhoneHint value={draft.phone} />}
             </Field>
-            <Field label="Email" hint="For account notices and receipts">
+            <Field
+              label="Email"
+              hint="For account notices and receipts"
+              error={emailError ?? undefined}
+            >
               <TextInput
                 type="email"
                 value={draft.email}
@@ -105,7 +122,7 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
             type="button"
             className="btn btn-primary"
             onClick={() => onSave({ ...value, ...draft })}
-            disabled={!dirty}
+            disabled={!canSave}
           >
             Save changes
             <Icon name="Check" size={18} />
