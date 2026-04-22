@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Icon } from "../components/icon";
 
 interface SuccessProps {
@@ -95,12 +96,29 @@ interface VirtualCardProps {
   network: string;
 }
 
+type WalletStatus = "idle" | "pending" | "error";
+
 function VirtualCard({ mask, network }: VirtualCardProps) {
-  const addToAppleWallet = () => {
-    // TODO: call Lithic push provisioning → pass encrypted payload to native iOS In-App Provisioning SDK
-  };
-  const addToGoogleWallet = () => {
-    // TODO: call Lithic push provisioning → Google Pay Push Provisioning API
+  const [apple, setApple] = useState<WalletStatus>("idle");
+  const [google, setGoogle] = useState<WalletStatus>("idle");
+  const [showDetails, setShowDetails] = useState(false);
+
+  const shouldFail =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("demo") === "wallet-fail";
+
+  const provision = async (
+    set: (s: WalletStatus) => void,
+    _target: "apple" | "google",
+  ): Promise<void> => {
+    set("pending");
+    await new Promise((r) => setTimeout(r, 900));
+    if (shouldFail) {
+      set("error");
+      return;
+    }
+    // TODO: Lithic push provisioning → wallet SDK. Stubbed success for prototype.
+    set("idle");
   };
 
   return (
@@ -127,20 +145,100 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
         </div>
 
         <div className="wallet-buttons">
-          <button className="wallet-btn wallet-btn-apple" onClick={addToAppleWallet}>
-            <Icon name="Wallet" size={18} color="rgb(var(--white))" />
-            Add to Apple Wallet
-          </button>
-          <button className="wallet-btn wallet-btn-google" onClick={addToGoogleWallet}>
-            <Icon name="Wallet" size={18} />
-            Add to Google Wallet
-          </button>
+          <WalletButton
+            variant="apple"
+            status={apple}
+            onClick={() => provision(setApple, "apple")}
+            onShowDetails={() => setShowDetails(true)}
+          />
+          <WalletButton
+            variant="google"
+            status={google}
+            onClick={() => provision(setGoogle, "google")}
+            onShowDetails={() => setShowDetails(true)}
+          />
         </div>
+
+        {showDetails && <ManualCardDetails mask={mask} onClose={() => setShowDetails(false)} />}
 
         <div className="legal-text muted virtual-card-disclaimer">
           <Icon name="Lock closed" size={12} /> Card number never leaves your issuer.
         </div>
       </div>
+    </div>
+  );
+}
+
+interface WalletButtonProps {
+  variant: "apple" | "google";
+  status: WalletStatus;
+  onClick: () => void;
+  onShowDetails: () => void;
+}
+
+function WalletButton({ variant, status, onClick, onShowDetails }: WalletButtonProps) {
+  const label = variant === "apple" ? "Apple Wallet" : "Google Wallet";
+  const className = `wallet-btn wallet-btn-${variant}`;
+  const iconColor = variant === "apple" ? "rgb(var(--white))" : undefined;
+
+  if (status === "error") {
+    return (
+      <div className="wallet-error">
+        <div className="wallet-error-msg">
+          <Icon name="Information circle" size={14} color="rgb(var(--error-700))" />
+          <span className="body-200">{label} add failed.</span>
+        </div>
+        <div className="wallet-error-actions">
+          <button className="wallet-error-retry" onClick={onClick}>
+            Retry
+          </button>
+          <button className="wallet-error-alt" onClick={onShowDetails}>
+            Show card details
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <button className={className} onClick={onClick} disabled={status === "pending"}>
+      <Icon name="Wallet" size={18} color={iconColor} />
+      {status === "pending" ? `Adding to ${label}…` : `Add to ${label}`}
+    </button>
+  );
+}
+
+interface ManualCardDetailsProps {
+  mask: string;
+  onClose: () => void;
+}
+
+function ManualCardDetails({ mask, onClose }: ManualCardDetailsProps) {
+  return (
+    <div className="card-details-inline" role="region" aria-label="Card details">
+      <div className="card-details-header">
+        <div className="heading-200">Card details</div>
+        <button className="icon-btn" onClick={onClose} aria-label="Hide card details">
+          <Icon name="X" size={16} />
+        </button>
+      </div>
+      <dl className="card-details-list">
+        <div>
+          <dt className="body-200 muted">Number</dt>
+          <dd className="body-400">4242 4242 4242 {mask}</dd>
+        </div>
+        <div>
+          <dt className="body-200 muted">Expires</dt>
+          <dd className="body-400">12/29</dd>
+        </div>
+        <div>
+          <dt className="body-200 muted">CVV</dt>
+          <dd className="body-400">•••</dd>
+        </div>
+      </dl>
+      <p className="legal-text muted" style={{ margin: 0 }}>
+        Use these details to check out online while we sort out wallet provisioning.
+      </p>
     </div>
   );
 }

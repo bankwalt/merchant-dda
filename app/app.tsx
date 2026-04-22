@@ -36,7 +36,9 @@ export default function App() {
       {step === "funds" && (
         <FundsFlow onBack={() => goto("agreements")} onActivate={() => goto("activating")} />
       )}
-      {step === "activating" && <Activating onDone={() => goto("success")} />}
+      {step === "activating" && (
+        <Activating onDone={() => goto("success")} onBack={() => goto("funds")} />
+      )}
       {step === "success" && (
         <Success onOpenDashboard={() => goto("intro")} onRestart={() => goto("intro")} />
       )}

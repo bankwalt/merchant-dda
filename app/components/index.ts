@@ -7,3 +7,4 @@ export { Icon } from "./icon";
 export { PhoneChrome } from "./phone-chrome";
 export { SavingsForm } from "./savings-form";
 export type { SavingsCadence, SavingsConfig } from "./savings-form";
+export { SupportSheet } from "./support-sheet";

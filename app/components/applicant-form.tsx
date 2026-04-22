@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "./icon";
 import { Field, ReadonlyRow, Section, TextInput } from "./form-fields";
+import { SupportSheet } from "./support-sheet";
 import { formatPhoneDisplay, maskTaxId, type Applicant } from "../data/merchant";
 
 interface ApplicantFormProps {
@@ -23,6 +24,7 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
   const ownershipPct =
     value.ownershipFraction != null ? `${Math.round(value.ownershipFraction * 100)}%` : "";
   const dirty = draft.phone !== value.phone || draft.email !== value.email;
+  const [supportOpen, setSupportOpen] = useState(false);
 
   return (
     <>
@@ -82,8 +84,18 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
               />
             </Field>
           </Section>
+
+          <button type="button" className="support-link" onClick={() => setSupportOpen(true)}>
+            Name, address, or tax ID wrong? Contact support
+            <Icon name="Arrow right" size={14} color="rgb(var(--primary-700))" />
+          </button>
         </form>
       </div>
+      <SupportSheet
+        open={supportOpen}
+        reason="Update locked identity details"
+        onClose={() => setSupportOpen(false)}
+      />
       <div className="sheet-footer">
         <div className="form-actions">
           <button type="button" className="btn btn-secondary" onClick={onCancel}>
