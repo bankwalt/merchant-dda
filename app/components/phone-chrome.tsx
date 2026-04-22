@@ -21,7 +21,7 @@ export function PhoneChrome({ children }: PhoneChromeProps) {
 
   return (
     <div className="canvas">
-      <div className="phone" role="application" aria-label="Partner mobile app">
+      <div className="phone" role="application" aria-label="Business Anywhere mobile app">
         <div className="phone-notch" />
         <div className="phone-status">
           <span>{clock}</span>

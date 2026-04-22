@@ -55,8 +55,7 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
             Where your money lands.
           </h1>
           <p className="body-400 muted" style={{ margin: "6px 0 0" }}>
-            Starting today, every card settlement sweeps into your new Partner Business Anywhere
-            account.
+            Starting today, every card settlement sweeps into your new Business Anywhere account.
           </p>
         </div>
 
@@ -70,7 +69,7 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
           <FlowArrow />
           <FlowNode
             icon="Wallet"
-            label="Partner Business Anywhere"
+            label="Business Anywhere"
             sub="Visa Business debit card included · FDIC insured"
             tone="primary"
             emphasis
@@ -86,7 +85,7 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
                 <Icon name="Trending up" size={16} />
               </div>
               <div className="flow-node-body">
-                <div className="body-300">Partner Savings</div>
+                <div className="body-300">Savings</div>
                 <div className="body-200 muted">
                   {savings.enabled
                     ? `${formatCurrency(savings.amount)} ${CADENCE_LABEL[savings.cadence]}`
@@ -119,8 +118,8 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
         <div className="notice">
           <Icon name="Information circle" size={16} color="rgb(var(--info-700))" />
           <span className="body-200" style={{ color: "rgb(var(--info-800))" }}>
-            Chase is no longer in the settlement loop — all card sales now land in your Partner
-            account. You can still send on-demand transfers from Settings.
+            Chase is no longer in the settlement loop — all card sales now land in your Business
+            Anywhere account. You can still send on-demand transfers from Settings.
           </span>
         </div>
       </div>
@@ -139,7 +138,7 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
 
       <EditSheet
         open={editing}
-        eyebrow="Partner Savings"
+        eyebrow="Savings"
         title={savings.enabled ? "Edit auto-save" : "Turn on auto-save"}
         onClose={() => setEditing(false)}
       >
@@ -175,7 +174,7 @@ function SavingsSummary({ savings, monthly, onEdit, onEnable }: SavingsSummaryPr
           <Icon name="Sparkles" size={18} />
         </div>
         <div className="savings-cta-body">
-          <div className="heading-200">Auto-save to Partner Savings</div>
+          <div className="heading-200">Auto-save to Savings</div>
           <div className="body-200 muted" style={{ marginTop: 2 }}>
             Earn 2.00% APY · $50 / month minimum
           </div>

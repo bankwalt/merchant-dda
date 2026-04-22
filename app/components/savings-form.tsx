@@ -118,7 +118,7 @@ export function SavingsForm({ value, onSave, onDisable, onCancel }: SavingsFormP
             <div className="form-warning">
               <Icon name="Information circle" size={16} color="rgb(var(--warning-800))" />
               <span className="body-200" style={{ color: "rgb(var(--warning-800))" }}>
-                Partner Savings needs at least <strong>$50 / month</strong> to earn the 2.00% APY.
+                Savings needs at least <strong>$50 / month</strong> to earn the 2.00% APY.
                 Bump up the amount or cadence to clear the minimum.
               </span>
             </div>
