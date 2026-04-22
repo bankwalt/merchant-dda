@@ -46,7 +46,7 @@ export function Intro({ onContinue }: IntroProps) {
 
           <div className="welcome-hero-copy">
             <div className="welcome-hero-headline">
-              Swipe the second
+              Spend the second
               <br />
               your settlements post.
             </div>
@@ -58,6 +58,8 @@ export function Intro({ onContinue }: IntroProps) {
 
           <TimeCompare />
         </div>
+
+        <SavingsCompareHero />
       </div>
 
       <div className="screen-footer">
@@ -155,5 +157,55 @@ function TimeCompare() {
         <span className="welcome-time-value">Instant</span>
       </div>
     </div>
+  );
+}
+
+function SavingsCompareHero() {
+  return (
+    <div className="welcome-hero welcome-hero-benefits">
+      <div className="welcome-hero-glow welcome-hero-glow-lime" aria-hidden="true" />
+      <div className="welcome-hero-glow welcome-hero-glow-forest" aria-hidden="true" />
+
+      <div className="welcome-hero-copy">
+        <div className="welcome-hero-eyebrow">Why Business Anywhere</div>
+        <div className="welcome-hero-headline">
+          Built for how
+          <br />
+          you actually run.
+        </div>
+      </div>
+
+      <ul className="benefit-list">
+        <BenefitRow
+          icon="Badge check"
+          title="No-fee banking"
+          sub="No monthly fees. No balance minimum. Ever."
+        />
+        <BenefitRow
+          icon="Trending up"
+          title="2.00% APY savings"
+          sub="8–200× higher than the top 5 US banks."
+        />
+        <BenefitRow
+          icon="Cash"
+          title="Spend without delay"
+          sub="Settlements available the moment they clear."
+        />
+      </ul>
+    </div>
+  );
+}
+
+function BenefitRow({ icon, title, sub }: { icon: string; title: string; sub: string }) {
+  return (
+    <li className="benefit-row">
+      <span className="benefit-row-icon" aria-hidden="true">
+        <Icon name={icon} size={18} color="#7fffb3" />
+      </span>
+      <div className="benefit-row-body">
+        <div className="benefit-row-title">{title}</div>
+        <div className="benefit-row-sub">{sub}</div>
+      </div>
+    </li>
   );
 }

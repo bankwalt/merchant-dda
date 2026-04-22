@@ -98,6 +98,99 @@
   background: radial-gradient(circle, rgba(42, 132, 102, 0.3), transparent 65%);
 }
 
+.welcome-hero-benefits {
+  background: linear-gradient(155deg, #0c3a2b 0%, #0d4a52 45%, #0a2f26 100%);
+}
+
+.welcome-hero-glow-lime {
+  top: -80px;
+  left: -60px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(127, 255, 179, 0.28), transparent 65%);
+}
+
+.welcome-hero-glow-forest {
+  bottom: -80px;
+  right: -50px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(16, 122, 90, 0.35), transparent 65%);
+}
+
+.welcome-hero-eyebrow {
+  position: relative;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7fffb3;
+  margin-bottom: 8px;
+}
+
+.welcome-hero-benefits .welcome-hero-copy {
+  margin-top: 0;
+}
+
+.benefit-list {
+  position: relative;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+.benefit-row + .benefit-row {
+  border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.benefit-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: rgba(127, 255, 179, 0.14);
+  border: 0.5px solid rgba(127, 255, 179, 0.28);
+  flex-shrink: 0;
+}
+
+.benefit-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.benefit-row-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(var(--white));
+  letter-spacing: -0.005em;
+}
+
+.benefit-row-sub {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.68);
+}
+
 .welcome-card,
 .welcome-hero-copy,
 .welcome-time-compare {
