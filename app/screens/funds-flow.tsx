@@ -4,6 +4,7 @@ import { EditSheet } from "../components/edit-sheet";
 import { SavingsForm, type SavingsCadence, type SavingsConfig } from "../components/savings-form";
 import { StepDots } from "../components/step-dots";
 import { initialMerchant as merchant } from "../data/merchant";
+import { track, useScreenView } from "../lib/analytics";
 
 const CADENCE_LABEL: Record<SavingsCadence, string> = {
   daily: "daily",
@@ -23,6 +24,13 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
     cadence: "monthly",
   });
   const [editing, setEditing] = useState(false);
+
+  useScreenView("funds_viewed");
+
+  const handleActivate = () => {
+    track("activate_clicked", { savingsEnabled: savings.enabled });
+    onActivate();
+  };
 
   const monthlyEquivalent =
     savings.cadence === "daily"
@@ -118,7 +126,7 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
       </div>
 
       <div className="screen-footer">
-        <button className="btn btn-primary" onClick={onActivate}>
+        <button className="btn btn-primary" onClick={handleActivate}>
           Activate my account
           <Icon name="Arrow right" size={18} />
         </button>

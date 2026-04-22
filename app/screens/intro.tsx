@@ -1,10 +1,13 @@
 import { Icon } from "../components/icon";
+import { useScreenView } from "../lib/analytics";
 
 interface IntroProps {
   onContinue: () => void;
 }
 
 export function Intro({ onContinue }: IntroProps) {
+  useScreenView("intro_viewed");
+
   return (
     <div className="screen welcome-screen">
       <div className="welcome-top">
