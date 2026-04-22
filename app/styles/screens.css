@@ -1393,3 +1393,172 @@
   align-items: center;
   gap: 6px;
 }
+
+/* ===== Support escape ===== */
+
+.support-link {
+  margin-top: 4px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--primary-700));
+  cursor: pointer;
+}
+
+.support-link:hover {
+  text-decoration: underline;
+}
+
+.support-sheet .support-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 24px;
+}
+
+.support-reason {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: rgb(var(--neutral-100));
+  align-self: flex-start;
+}
+
+.support-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgb(var(--neutral-200));
+  background: rgb(var(--white));
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 150ms ease;
+}
+
+.support-option:hover {
+  border-color: rgb(var(--primary-300));
+}
+
+.support-option-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgb(var(--primary-100));
+  color: rgb(var(--primary-700));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.support-option > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== Activating error ===== */
+
+.activating-error-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  background: rgb(var(--warning-500));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 8px 20px -8px rgba(var(--warning-700), 0.5);
+}
+
+.activating-error-detail {
+  background: rgb(var(--neutral-100));
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ===== Wallet error state ===== */
+
+.wallet-btn-error {
+  background: rgb(var(--error-100));
+  color: rgb(var(--error-700));
+  border-color: rgb(var(--error-300));
+}
+
+.wallet-btn-added {
+  background: rgb(var(--success-100));
+  color: rgb(var(--success-700));
+  border-color: rgb(var(--success-300));
+  opacity: 1;
+  cursor: default;
+}
+
+.wallet-fallback-link {
+  align-self: center;
+  background: none;
+  border: 0;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--primary-700));
+  cursor: pointer;
+}
+
+.wallet-fallback-link:hover {
+  text-decoration: underline;
+}
+
+.wallet-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.card-details-inline {
+  margin-top: 4px;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: rgb(var(--neutral-100));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-details-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.card-details-list > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-details-list dt {
+  margin: 0 0 2px;
+}
+
+.card-details-list dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}

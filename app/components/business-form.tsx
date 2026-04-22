@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "./icon";
 import { Field, ReadonlyRow, Section, TextInput } from "./form-fields";
+import { SupportSheet } from "./support-sheet";
 import {
   businessTypeOptions,
   formatCurrency,
@@ -28,6 +29,7 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
   const addressLine1 = [value.address.street, value.address.street2].filter(Boolean).join(", ");
   const addressLine2 = `${value.address.city}, ${value.address.state} ${value.address.zip}`;
   const dirty = draft.phone !== value.phone || draft.email !== value.email;
+  const [supportOpen, setSupportOpen] = useState(false);
 
   return (
     <>
@@ -103,8 +105,18 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
             <ReadonlyRow label="Statement descriptor" value={value.statementDescriptor} />
             <ReadonlyRow label="Website" value={value.websiteUrl} />
           </Section>
+
+          <button type="button" className="support-link" onClick={() => setSupportOpen(true)}>
+            Need to change a locked detail? Contact support
+            <Icon name="Arrow right" size={14} color="rgb(var(--primary-700))" />
+          </button>
         </form>
       </div>
+      <SupportSheet
+        open={supportOpen}
+        reason="Update locked business details"
+        onClose={() => setSupportOpen(false)}
+      />
       <div className="sheet-footer">
         <div className="form-actions">
           <button type="button" className="btn btn-secondary" onClick={onCancel}>
