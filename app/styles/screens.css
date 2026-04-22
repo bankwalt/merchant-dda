@@ -1492,48 +1492,25 @@
 
 /* ===== Wallet error state ===== */
 
-.wallet-error {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
+.wallet-btn-error {
   background: rgb(var(--error-100));
-  border: 1px solid rgb(var(--error-300));
-}
-
-.wallet-error-msg {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   color: rgb(var(--error-700));
+  border-color: rgb(var(--error-300));
 }
 
-.wallet-error-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.wallet-error-retry,
-.wallet-error-alt {
-  flex: 1;
-  height: 36px;
-  border-radius: var(--radius-md);
+.wallet-fallback-link {
+  align-self: center;
+  background: none;
+  border: 0;
+  padding: 4px 8px;
   font-size: 13px;
   font-weight: 600;
+  color: rgb(var(--primary-700));
   cursor: pointer;
-  border: 1px solid transparent;
-  background: rgb(var(--white));
 }
 
-.wallet-error-retry {
-  background: rgb(var(--neutral-900));
-  color: rgb(var(--white));
-}
-
-.wallet-error-alt {
-  border-color: rgb(var(--neutral-300));
-  color: rgb(var(--neutral-900));
+.wallet-fallback-link:hover {
+  text-decoration: underline;
 }
 
 .wallet-btn:disabled {

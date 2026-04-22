@@ -107,10 +107,7 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("demo") === "wallet-fail";
 
-  const provision = async (
-    set: (s: WalletStatus) => void,
-    _target: "apple" | "google",
-  ): Promise<void> => {
+  const provision = async (set: (s: WalletStatus) => void): Promise<void> => {
     set("pending");
     await new Promise((r) => setTimeout(r, 900));
     if (shouldFail) {
@@ -120,6 +117,8 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
     // TODO: Lithic push provisioning → wallet SDK. Stubbed success for prototype.
     set("idle");
   };
+
+  const anyError = apple === "error" || google === "error";
 
   return (
     <div className="virtual-card">
@@ -145,19 +144,15 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
         </div>
 
         <div className="wallet-buttons">
-          <WalletButton
-            variant="apple"
-            status={apple}
-            onClick={() => provision(setApple, "apple")}
-            onShowDetails={() => setShowDetails(true)}
-          />
-          <WalletButton
-            variant="google"
-            status={google}
-            onClick={() => provision(setGoogle, "google")}
-            onShowDetails={() => setShowDetails(true)}
-          />
+          <WalletButton variant="apple" status={apple} onClick={() => provision(setApple)} />
+          <WalletButton variant="google" status={google} onClick={() => provision(setGoogle)} />
         </div>
+
+        {anyError && !showDetails && (
+          <button className="wallet-fallback-link" onClick={() => setShowDetails(true)}>
+            Use card details instead
+          </button>
+        )}
 
         {showDetails && <ManualCardDetails mask={mask} onClose={() => setShowDetails(false)} />}
 
@@ -173,37 +168,29 @@ interface WalletButtonProps {
   variant: "apple" | "google";
   status: WalletStatus;
   onClick: () => void;
-  onShowDetails: () => void;
 }
 
-function WalletButton({ variant, status, onClick, onShowDetails }: WalletButtonProps) {
+function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   const label = variant === "apple" ? "Apple Wallet" : "Google Wallet";
-  const className = `wallet-btn wallet-btn-${variant}`;
   const iconColor = variant === "apple" ? "rgb(var(--white))" : undefined;
 
   if (status === "error") {
     return (
-      <div className="wallet-error">
-        <div className="wallet-error-msg">
-          <Icon name="Information circle" size={14} color="rgb(var(--error-700))" />
-          <span className="body-200">{label} add failed.</span>
-        </div>
-        <div className="wallet-error-actions">
-          <button className="wallet-error-retry" onClick={onClick}>
-            Retry
-          </button>
-          <button className="wallet-error-alt" onClick={onShowDetails}>
-            Show card details
-          </button>
-        </div>
-      </div>
+      <button className="wallet-btn wallet-btn-error" onClick={onClick}>
+        <Icon name="Information circle" size={16} color="rgb(var(--error-700))" />
+        <span>Couldn't add · Retry</span>
+      </button>
     );
   }
 
   return (
-    <button className={className} onClick={onClick} disabled={status === "pending"}>
+    <button
+      className={`wallet-btn wallet-btn-${variant}`}
+      onClick={onClick}
+      disabled={status === "pending"}
+    >
       <Icon name="Wallet" size={18} color={iconColor} />
-      {status === "pending" ? `Adding to ${label}…` : `Add to ${label}`}
+      {status === "pending" ? "Adding…" : `Add to ${label}`}
     </button>
   );
 }
