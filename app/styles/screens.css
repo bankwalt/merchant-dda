@@ -98,7 +98,7 @@
   background: radial-gradient(circle, rgba(42, 132, 102, 0.3), transparent 65%);
 }
 
-.welcome-hero-savings {
+.welcome-hero-benefits {
   background: linear-gradient(155deg, #0c3a2b 0%, #0d4a52 45%, #0a2f26 100%);
 }
 
@@ -118,62 +118,77 @@
   background: radial-gradient(circle, rgba(16, 122, 90, 0.35), transparent 65%);
 }
 
-.savings-delta {
+.welcome-hero-eyebrow {
   position: relative;
-  padding: 16px 4px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 6px;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7fffb3;
+  margin-bottom: 8px;
 }
 
-.savings-delta-up {
+.welcome-hero-benefits .welcome-hero-copy {
+  margin-top: 0;
+}
+
+.benefit-list {
+  position: relative;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+.benefit-row + .benefit-row {
+  border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.benefit-row-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 14px;
-  background: rgba(127, 255, 179, 0.16);
-  border: 0.5px solid rgba(127, 255, 179, 0.35);
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: rgba(127, 255, 179, 0.14);
+  border: 0.5px solid rgba(127, 255, 179, 0.28);
+  flex-shrink: 0;
 }
 
-.savings-delta-amount {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 2px;
-  color: #7fffb3;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+.benefit-row-body {
+  flex: 1;
+  min-width: 0;
 }
 
-.savings-delta-plus {
-  font-size: 22px;
-  font-weight: 600;
-  opacity: 0.85;
-}
-
-.savings-delta-value {
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.savings-delta-unit {
+.benefit-row-title {
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  margin-left: 4px;
+  color: rgb(var(--white));
+  letter-spacing: -0.005em;
 }
 
-.savings-delta-caption {
+.benefit-row-sub {
+  margin-top: 2px;
   font-size: 12px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.65);
-  max-width: 260px;
-  line-height: 1.35;
-  letter-spacing: -0.005em;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.68);
 }
 
 .welcome-card,

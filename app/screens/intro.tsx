@@ -46,7 +46,7 @@ export function Intro({ onContinue }: IntroProps) {
 
           <div className="welcome-hero-copy">
             <div className="welcome-hero-headline">
-              Swipe the second
+              Spend the second
               <br />
               your settlements post.
             </div>
@@ -162,47 +162,50 @@ function TimeCompare() {
 
 function SavingsCompareHero() {
   return (
-    <div className="welcome-hero welcome-hero-savings">
+    <div className="welcome-hero welcome-hero-benefits">
       <div className="welcome-hero-glow welcome-hero-glow-lime" aria-hidden="true" />
       <div className="welcome-hero-glow welcome-hero-glow-forest" aria-hidden="true" />
 
-      <div className="savings-delta">
-        <span className="savings-delta-up" aria-hidden="true">
-          <Icon name="Trending up" size={14} color="#7fffb3" />
-        </span>
-        <div className="savings-delta-amount">
-          <span className="savings-delta-plus">+</span>
-          <span className="savings-delta-value">$200</span>
-          <span className="savings-delta-unit">/ yr</span>
-        </div>
-        <div className="savings-delta-caption">
-          Extra earnings on a $10,000 balance — every year you're with Partner.
-        </div>
-      </div>
-
       <div className="welcome-hero-copy">
+        <div className="welcome-hero-eyebrow">Why Business Anywhere</div>
         <div className="welcome-hero-headline">
-          Your cash,
+          Built for how
           <br />
-          actually paying you.
+          you actually run.
         </div>
-        <p className="welcome-hero-body">
-          Top 5 banks pay 0.01% on savings. Partner Savings pays 2.00% — that's 200× more on every
-          idle dollar.
-        </p>
       </div>
 
-      <div className="welcome-time-compare">
-        <div className="welcome-time-row">
-          <span className="welcome-time-label">Top 5 bank</span>
-          <span className="welcome-time-value">0.01% APY · $1 / yr</span>
-        </div>
-        <div className="welcome-time-divider" aria-hidden="true" />
-        <div className="welcome-time-row is-you">
-          <span className="welcome-time-label">Partner Savings</span>
-          <span className="welcome-time-value">2.00% APY · $200 / yr</span>
-        </div>
-      </div>
+      <ul className="benefit-list">
+        <BenefitRow
+          icon="Badge check"
+          title="No-fee banking"
+          sub="No monthly fees. No balance minimum. Ever."
+        />
+        <BenefitRow
+          icon="Trending up"
+          title="2.00% APY savings"
+          sub="8–200× higher than the top 5 US banks."
+        />
+        <BenefitRow
+          icon="Cash"
+          title="Spend without delay"
+          sub="Settlements available the moment they clear."
+        />
+      </ul>
     </div>
+  );
+}
+
+function BenefitRow({ icon, title, sub }: { icon: string; title: string; sub: string }) {
+  return (
+    <li className="benefit-row">
+      <span className="benefit-row-icon" aria-hidden="true">
+        <Icon name={icon} size={18} color="#7fffb3" />
+      </span>
+      <div className="benefit-row-body">
+        <div className="benefit-row-title">{title}</div>
+        <div className="benefit-row-sub">{sub}</div>
+      </div>
+    </li>
   );
 }
