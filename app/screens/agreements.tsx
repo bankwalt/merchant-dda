@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Icon } from "../components/icon";
 import { DisclosureSheet } from "../components/disclosure-sheet";
 import { StepDots } from "../components/step-dots";
-import { disclosureGroups, priorConsents } from "../data/merchant";
+import { disclosureGroups, priorConsents, type ConsentRecord } from "../data/merchant";
 
 interface AgreementsProps {
   onBack: () => void;
@@ -10,20 +10,30 @@ interface AgreementsProps {
 }
 
 export function Agreements({ onBack, onContinue }: AgreementsProps) {
-  const [accepted, setAccepted] = useState<Set<string>>(() => new Set());
+  const [records, setRecords] = useState<Record<string, ConsentRecord>>({});
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const allDone = accepted.size === disclosureGroups.length;
+  const acceptedCount = Object.keys(records).length;
+  const allDone = acceptedCount === disclosureGroups.length;
   const activeGroup = disclosureGroups.find((g) => g.id === openId) ?? null;
 
   const acceptCurrent = () => {
-    if (!openId) return;
-    setAccepted((prev) => {
-      const next = new Set(prev);
-      next.add(openId);
-      return next;
-    });
+    if (!activeGroup) return;
+    const record: ConsentRecord = {
+      groupId: activeGroup.id,
+      docVersions: Object.fromEntries(activeGroup.docs.map((d) => [d.id, d.version])),
+      acceptedAt: new Date().toISOString(),
+      userId: null,
+    };
+    setRecords((prev) => ({ ...prev, [activeGroup.id]: record }));
     setOpenId(null);
+  };
+
+  const handleContinue = () => {
+    // TODO(stage-3): persist records to backend via Auth0-scoped session.
+    // For now, emit to console so the record shape is visible during review.
+    console.info("[consent.accepted]", Object.values(records));
+    onContinue();
   };
 
   return (
@@ -49,11 +59,11 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
         <div className="agreements-progress">
           <div
             className="agreements-progress-fill"
-            style={{ width: `${(accepted.size / disclosureGroups.length) * 100}%` }}
+            style={{ width: `${(acceptedCount / disclosureGroups.length) * 100}%` }}
           />
         </div>
         <div className="body-200 muted" style={{ marginTop: -8 }}>
-          {accepted.size} of {disclosureGroups.length} accepted
+          {acceptedCount} of {disclosureGroups.length} accepted
         </div>
 
         <div className="disclosure-owner">
@@ -63,7 +73,7 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
 
         <div className="stack-md">
           {disclosureGroups.map((g) => {
-            const done = accepted.has(g.id);
+            const done = g.id in records;
             const docCountLabel =
               g.docs.length > 1 ? ` · ${g.docs.length} documents` : "";
             return (
@@ -120,8 +130,8 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
       </div>
 
       <div className="screen-footer">
-        <button className="btn btn-primary" onClick={onContinue} disabled={!allDone}>
-          {allDone ? "Continue" : `Accept ${disclosureGroups.length - accepted.size} more`}
+        <button className="btn btn-primary" onClick={handleContinue} disabled={!allDone}>
+          {allDone ? "Continue" : `Accept ${disclosureGroups.length - acceptedCount} more`}
           {allDone && <Icon name="Arrow right" size={18} />}
         </button>
       </div>
@@ -129,7 +139,7 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
       <DisclosureSheet
         open={activeGroup !== null}
         group={activeGroup}
-        alreadyAccepted={openId ? accepted.has(openId) : false}
+        alreadyAccepted={openId ? openId in records : false}
         onClose={() => setOpenId(null)}
         onAccept={acceptCurrent}
       />
