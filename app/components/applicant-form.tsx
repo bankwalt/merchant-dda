@@ -9,6 +9,7 @@ import {
   validatePhone,
   type Applicant,
 } from "../data/merchant";
+import { track } from "../lib/analytics";
 
 interface ApplicantFormProps {
   value: Applicant;
@@ -102,7 +103,14 @@ export function ApplicantForm({ value, onSave, onCancel }: ApplicantFormProps) {
             </Field>
           </Section>
 
-          <button type="button" className="support-link" onClick={() => setSupportOpen(true)}>
+          <button
+            type="button"
+            className="support-link"
+            onClick={() => {
+              track("support_opened", { from: "applicant_form" });
+              setSupportOpen(true);
+            }}
+          >
             Name, address, or tax ID wrong? Contact support
             <Icon name="Arrow right" size={14} color="rgb(var(--primary-700))" />
           </button>

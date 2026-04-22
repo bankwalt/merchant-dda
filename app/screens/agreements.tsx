@@ -3,6 +3,7 @@ import { Icon } from "../components/icon";
 import { DisclosureSheet } from "../components/disclosure-sheet";
 import { StepDots } from "../components/step-dots";
 import { disclosureGroups, priorConsents, type ConsentRecord } from "../data/merchant";
+import { track, useScreenView } from "../lib/analytics";
 
 interface AgreementsProps {
   onBack: () => void;
@@ -17,6 +18,8 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
   const allDone = acceptedCount === disclosureGroups.length;
   const activeGroup = disclosureGroups.find((g) => g.id === openId) ?? null;
 
+  useScreenView("agreements_viewed");
+
   const acceptCurrent = () => {
     if (!activeGroup) return;
     const record: ConsentRecord = {
@@ -26,6 +29,7 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
       userId: null,
     };
     setRecords((prev) => ({ ...prev, [activeGroup.id]: record }));
+    track("disclosure_accepted", { groupId: activeGroup.id });
     setOpenId(null);
   };
 

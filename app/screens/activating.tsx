@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Icon } from "../components/icon";
 import { SupportSheet } from "../components/support-sheet";
+import { track } from "../lib/analytics";
 
 const steps = [
   { key: "open", label: "Opening your DDA" },
@@ -34,6 +35,7 @@ export function Activating({ onDone, onBack }: ActivatingProps) {
     const t = setTimeout(() => {
       if (shouldFail && idx === 1) {
         setPhase("error");
+        track("activation_failed", { failedStep: steps[1].key });
       } else {
         setIdx((i) => i + 1);
       }
@@ -72,7 +74,13 @@ export function Activating({ onDone, onBack }: ActivatingProps) {
             Try again
             <Icon name="Arrow right" size={18} />
           </button>
-          <button className="btn btn-ghost" onClick={() => setSupportOpen(true)}>
+          <button
+            className="btn btn-ghost"
+            onClick={() => {
+              track("support_opened", { from: "activation_error" });
+              setSupportOpen(true);
+            }}
+          >
             Contact support
           </button>
           <button className="btn btn-ghost" onClick={onBack}>

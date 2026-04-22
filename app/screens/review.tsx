@@ -4,6 +4,7 @@ import { EditSheet } from "../components/edit-sheet";
 import { BusinessForm } from "../components/business-form";
 import { ApplicantForm } from "../components/applicant-form";
 import { StepDots } from "../components/step-dots";
+import { useScreenView } from "../lib/analytics";
 import {
   businessTypeOptions,
   formatPhoneDisplay,
@@ -31,6 +32,7 @@ export function Review({
   onContinue,
 }: ReviewProps) {
   const [editing, setEditing] = useState<EditingTarget>(null);
+  useScreenView("review_viewed");
 
   const { business, applicant, externalBank } = merchant;
 

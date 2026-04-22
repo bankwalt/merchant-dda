@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Icon } from "../components/icon";
+import { track, useScreenView } from "../lib/analytics";
 
 interface SuccessProps {
   onOpenDashboard: () => void;
@@ -7,6 +8,8 @@ interface SuccessProps {
 }
 
 export function Success({ onOpenDashboard, onRestart }: SuccessProps) {
+  useScreenView("success_viewed");
+
   return (
     <div className="screen success-screen">
       <div className="success-confetti" aria-hidden="true" />
@@ -120,10 +123,12 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
     await new Promise((r) => setTimeout(r, 900));
     if (failTarget === target) {
       set("error");
+      track("wallet_add_failed", { target });
       return;
     }
     // TODO: Lithic push provisioning → wallet SDK. Stubbed success for prototype.
     set("added");
+    track("wallet_add_succeeded", { target });
   };
 
   return (

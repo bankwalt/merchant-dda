@@ -11,6 +11,7 @@ import {
   validatePhone,
   type Business,
 } from "../data/merchant";
+import { track } from "../lib/analytics";
 
 interface BusinessFormProps {
   value: Business;
@@ -119,7 +120,14 @@ export function BusinessForm({ value, onSave, onCancel }: BusinessFormProps) {
             <ReadonlyRow label="Website" value={value.websiteUrl} />
           </Section>
 
-          <button type="button" className="support-link" onClick={() => setSupportOpen(true)}>
+          <button
+            type="button"
+            className="support-link"
+            onClick={() => {
+              track("support_opened", { from: "business_form" });
+              setSupportOpen(true);
+            }}
+          >
             Need to change a locked detail? Contact support
             <Icon name="Arrow right" size={14} color="rgb(var(--primary-700))" />
           </button>
