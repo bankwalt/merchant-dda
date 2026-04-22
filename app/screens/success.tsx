@@ -186,6 +186,7 @@ interface WalletButtonProps {
 
 function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   const label = variant === "apple" ? "Apple Wallet" : "Google Wallet";
+  const Glyph = variant === "apple" ? AppleWalletGlyph : GoogleWalletGlyph;
 
   if (status === "error") {
     return (
@@ -212,18 +213,36 @@ function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   return (
     <button className="wallet-btn" onClick={onClick} disabled={status === "pending"}>
       <span className="wallet-btn-icon">
-        <CardGlyph />
+        <Glyph />
       </span>
       {status === "pending" ? `Adding to ${label}…` : `Add to ${label}`}
     </button>
   );
 }
 
-function CardGlyph() {
+function AppleWalletGlyph() {
   return (
-    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
-      <rect x="1" y="1" width="20" height="14" rx="2.5" stroke="#fff" strokeWidth="1.5" />
-      <path d="M1 5.5h20" stroke="#fff" strokeWidth="1.5" />
+    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+      <rect x="0" y="0" width="22" height="22" rx="5" fill="#000" />
+      <rect x="5" y="4" width="12" height="2" rx="0.8" fill="#34C759" />
+      <rect x="5" y="6.4" width="12" height="2" rx="0.8" fill="#FFD60A" />
+      <rect x="5" y="8.8" width="12" height="2" rx="0.8" fill="#0A84FF" />
+      <rect x="5" y="11.2" width="12" height="2" rx="0.8" fill="#FF453A" />
+      <path
+        d="M3 14 L3 18 Q3 19 4 19 L18 19 Q19 19 19 18 L19 14 Q17 15 14 15 Q13 16.4 11 16.4 Q9 16.4 8 15 Q5 15 3 14 Z"
+        fill="#E5E3DC"
+      />
+    </svg>
+  );
+}
+
+function GoogleWalletGlyph() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+      <path d="M3 5 Q3 3 5 3 L17 3 Q19 3 19 5 L19 8 Q11 10 3 8 Z" fill="#34A853" />
+      <path d="M3 8 L19 8 L19 11 Q11 13 3 11 Z" fill="#FBBC04" />
+      <path d="M3 11 L19 11 L19 14 Q11 16 3 14 Z" fill="#EA4335" />
+      <path d="M3 14 L3 17 Q3 19 5 19 L17 19 Q19 19 19 17 L19 14 Q11 16 3 14 Z" fill="#4285F4" />
     </svg>
   );
 }
