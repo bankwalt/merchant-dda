@@ -96,26 +96,30 @@ interface VirtualCardProps {
   network: string;
 }
 
-type WalletStatus = "idle" | "pending" | "error";
+type WalletStatus = "idle" | "pending" | "error" | "added";
+
+type WalletTarget = "apple" | "google";
 
 function VirtualCard({ mask, network }: VirtualCardProps) {
   const [apple, setApple] = useState<WalletStatus>("idle");
   const [google, setGoogle] = useState<WalletStatus>("idle");
   const [showDetails, setShowDetails] = useState(false);
 
-  const shouldFail =
+  const failTarget: WalletTarget | null =
     typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("demo") === "wallet-fail";
+    new URLSearchParams(window.location.search).get("demo") === "wallet-fail"
+      ? "apple"
+      : null;
 
-  const provision = async (set: (s: WalletStatus) => void): Promise<void> => {
+  const provision = async (set: (s: WalletStatus) => void, target: WalletTarget): Promise<void> => {
     set("pending");
     await new Promise((r) => setTimeout(r, 900));
-    if (shouldFail) {
+    if (failTarget === target) {
       set("error");
       return;
     }
     // TODO: Lithic push provisioning → wallet SDK. Stubbed success for prototype.
-    set("idle");
+    set("added");
   };
 
   const anyError = apple === "error" || google === "error";
@@ -144,8 +148,16 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
         </div>
 
         <div className="wallet-buttons">
-          <WalletButton variant="apple" status={apple} onClick={() => provision(setApple)} />
-          <WalletButton variant="google" status={google} onClick={() => provision(setGoogle)} />
+          <WalletButton
+            variant="apple"
+            status={apple}
+            onClick={() => provision(setApple, "apple")}
+          />
+          <WalletButton
+            variant="google"
+            status={google}
+            onClick={() => provision(setGoogle, "google")}
+          />
         </div>
 
         {anyError && !showDetails && (
@@ -179,6 +191,15 @@ function WalletButton({ variant, status, onClick }: WalletButtonProps) {
       <button className="wallet-btn wallet-btn-error" onClick={onClick}>
         <Icon name="Information circle" size={16} color="rgb(var(--error-700))" />
         <span>Couldn't add · Retry</span>
+      </button>
+    );
+  }
+
+  if (status === "added") {
+    return (
+      <button className="wallet-btn wallet-btn-added" disabled>
+        <Icon name="Check circle" size={16} color="rgb(var(--success-700))" />
+        <span>Added</span>
       </button>
     );
   }

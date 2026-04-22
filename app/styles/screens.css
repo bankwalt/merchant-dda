@@ -1498,6 +1498,14 @@
   border-color: rgb(var(--error-300));
 }
 
+.wallet-btn-added {
+  background: rgb(var(--success-100));
+  color: rgb(var(--success-700));
+  border-color: rgb(var(--success-300));
+  opacity: 1;
+  cursor: default;
+}
+
 .wallet-fallback-link {
   align-self: center;
   background: none;
