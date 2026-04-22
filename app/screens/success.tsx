@@ -186,7 +186,6 @@ interface WalletButtonProps {
 
 function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   const label = variant === "apple" ? "Apple Wallet" : "Google Wallet";
-  const Glyph = variant === "apple" ? AppleWalletGlyph : GoogleWalletGlyph;
 
   if (status === "error") {
     return (
@@ -213,33 +212,18 @@ function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   return (
     <button className="wallet-btn" onClick={onClick} disabled={status === "pending"}>
       <span className="wallet-btn-icon">
-        <Glyph />
+        <CardGlyph />
       </span>
       {status === "pending" ? `Adding to ${label}…` : `Add to ${label}`}
     </button>
   );
 }
 
-function AppleWalletGlyph() {
+function CardGlyph() {
   return (
-    <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true">
-      <rect x="0.5" y="0.5" width="23" height="17" rx="3" fill="#8A5A3B" stroke="#6B4025" />
-      <rect x="2.5" y="2.5" width="19" height="13" rx="1.5" fill="#A36D47" />
-      <path d="M3 9 L21 9" stroke="#6B4025" strokeWidth="0.8" />
-      <rect x="14" y="10.5" width="5.5" height="3.5" rx="0.5" fill="#EAB06B" />
-      <rect x="14" y="10.5" width="5.5" height="3.5" rx="0.5" fill="none" stroke="#6B4025" strokeWidth="0.4" />
-    </svg>
-  );
-}
-
-function GoogleWalletGlyph() {
-  return (
-    <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true">
-      <rect x="0.5" y="0.5" width="23" height="17" rx="3" fill="#fff" stroke="#dadce0" />
-      <rect x="3" y="3" width="5" height="12" fill="#EA4335" />
-      <rect x="8" y="3" width="5" height="12" fill="#FBBC04" />
-      <rect x="13" y="3" width="4" height="12" fill="#34A853" />
-      <rect x="17" y="3" width="4" height="12" fill="#4285F4" />
+    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
+      <rect x="1" y="1" width="20" height="14" rx="2.5" stroke="#fff" strokeWidth="1.5" />
+      <path d="M1 5.5h20" stroke="#fff" strokeWidth="1.5" />
     </svg>
   );
 }
