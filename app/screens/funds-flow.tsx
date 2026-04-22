@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Icon } from "../components/icon";
 import { EditSheet } from "../components/edit-sheet";
 import { SavingsForm, type SavingsCadence, type SavingsConfig } from "../components/savings-form";
+import { StepDots } from "../components/step-dots";
 import { initialMerchant as merchant } from "../data/merchant";
 
 const CADENCE_LABEL: Record<SavingsCadence, string> = {
@@ -36,7 +37,7 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
         <button className="icon-btn" onClick={onBack} aria-label="Back">
           <Icon name="Chevron left" size={22} />
         </button>
-        <StepDots current={2} total={3} />
+        <StepDots current={2} total={3} label="Funds" />
         <span style={{ width: 36 }} />
       </div>
 
@@ -52,7 +53,12 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
         </div>
 
         <div className="flow-card">
-          <FlowNode icon="Credit card" label="Card sales" sub="Processed daily" tone="neutral" />
+          <FlowNode
+            icon="Credit card"
+            label="Card sales"
+            sub="Available the moment they clear"
+            tone="neutral"
+          />
           <FlowArrow />
           <FlowNode
             icon="Wallet"
@@ -244,19 +250,6 @@ function FlowArrow({ branch }: { branch?: boolean }) {
       ) : (
         <div className="flow-arrow-line" />
       )}
-    </div>
-  );
-}
-
-function StepDots({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="step-dots">
-      {Array.from({ length: total }).map((_, i) => (
-        <span
-          key={i}
-          className={`step-dot ${i === current ? "active" : i < current ? "done" : ""}`}
-        />
-      ))}
     </div>
   );
 }

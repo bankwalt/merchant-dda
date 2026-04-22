@@ -68,6 +68,7 @@ export function DisclosureSheet({
   const unreadCount = group.docs.filter((d) => !readState[d.id]).length;
   const hasTabs = group.docs.length > 1;
   const activeLoaded = activeId ? loadedState[activeId] : false;
+  const activeUnread = activeId ? !readState[activeId] : false;
 
   return (
     <div className="sheet-root" role="dialog" aria-modal="true" aria-label={group.title}>
@@ -146,12 +147,23 @@ export function DisclosureSheet({
 
         <div className="sheet-footer">
           {!alreadyAccepted && !allRead && (
-            <div className="sheet-hint body-200 muted">
-              {hasTabs
-                ? unreadCount === 1
-                  ? "Scroll to the end of 1 more section to accept."
-                  : `Scroll to the end of ${unreadCount} more sections to accept.`
-                : "Scroll to the end to accept."}
+            <div className="sheet-hint-row">
+              <div className="sheet-hint body-200 muted">
+                {hasTabs
+                  ? unreadCount === 1
+                    ? "Scroll to the end of 1 more section — or mark as read."
+                    : `Scroll to the end of ${unreadCount} more sections — or mark as read.`
+                  : "Scroll to the end — or mark as read."}
+              </div>
+              {activeUnread && activeId && (
+                <button
+                  type="button"
+                  className="sheet-mark-read"
+                  onClick={() => markRead(activeId)}
+                >
+                  Mark this section as read
+                </button>
+              )}
             </div>
           )}
           {alreadyAccepted ? (

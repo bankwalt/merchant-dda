@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "../components/icon";
 import { DisclosureSheet } from "../components/disclosure-sheet";
+import { StepDots } from "../components/step-dots";
 import { disclosureGroups, priorConsents } from "../data/merchant";
 
 interface AgreementsProps {
@@ -31,7 +32,7 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
         <button className="icon-btn" onClick={onBack} aria-label="Back">
           <Icon name="Chevron left" size={22} />
         </button>
-        <StepDots current={1} total={3} />
+        <StepDots current={1} total={3} label="Agreements" />
         <span style={{ width: 36 }} />
       </div>
 
@@ -136,15 +137,3 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
   );
 }
 
-function StepDots({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="step-dots">
-      {Array.from({ length: total }).map((_, i) => (
-        <span
-          key={i}
-          className={`step-dot ${i === current ? "active" : i < current ? "done" : ""}`}
-        />
-      ))}
-    </div>
-  );
-}

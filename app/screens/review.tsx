@@ -3,6 +3,7 @@ import { Icon } from "../components/icon";
 import { EditSheet } from "../components/edit-sheet";
 import { BusinessForm } from "../components/business-form";
 import { ApplicantForm } from "../components/applicant-form";
+import { StepDots } from "../components/step-dots";
 import {
   businessTypeOptions,
   formatPhoneDisplay,
@@ -61,7 +62,7 @@ export function Review({
         <button className="icon-btn" onClick={onBack} aria-label="Back">
           <Icon name="Chevron left" size={22} />
         </button>
-        <StepDots current={0} total={3} />
+        <StepDots current={0} total={3} label="Review" />
         <span style={{ width: 36 }} />
       </div>
 
@@ -179,15 +180,3 @@ function Row({ icon, title, subtitle, meta, onClick }: RowProps) {
   );
 }
 
-function StepDots({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="step-dots">
-      {Array.from({ length: total }).map((_, i) => (
-        <span
-          key={i}
-          className={`step-dot ${i === current ? "active" : i < current ? "done" : ""}`}
-        />
-      ))}
-    </div>
-  );
-}
