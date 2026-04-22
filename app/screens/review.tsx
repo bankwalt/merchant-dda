@@ -102,9 +102,7 @@ export function Review({
 
         <div className="notice">
           <Icon name="Lock closed" size={16} color="rgb(var(--neutral-600))" />
-          <span className="body-200 muted-strong">
-            Encrypted. We'll re-verify identity in the next step.
-          </span>
+          <span className="body-200 muted-strong">Encrypted end to end.</span>
         </div>
       </div>
 
