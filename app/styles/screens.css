@@ -98,6 +98,84 @@
   background: radial-gradient(circle, rgba(42, 132, 102, 0.3), transparent 65%);
 }
 
+.welcome-hero-savings {
+  background: linear-gradient(155deg, #0c3a2b 0%, #0d4a52 45%, #0a2f26 100%);
+}
+
+.welcome-hero-glow-lime {
+  top: -80px;
+  left: -60px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(127, 255, 179, 0.28), transparent 65%);
+}
+
+.welcome-hero-glow-forest {
+  bottom: -80px;
+  right: -50px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(16, 122, 90, 0.35), transparent 65%);
+}
+
+.savings-delta {
+  position: relative;
+  padding: 16px 4px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.savings-delta-up {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgba(127, 255, 179, 0.16);
+  border: 0.5px solid rgba(127, 255, 179, 0.35);
+}
+
+.savings-delta-amount {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  color: #7fffb3;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.savings-delta-plus {
+  font-size: 22px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.savings-delta-value {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.savings-delta-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 4px;
+}
+
+.savings-delta-caption {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 260px;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+
 .welcome-card,
 .welcome-hero-copy,
 .welcome-time-compare {

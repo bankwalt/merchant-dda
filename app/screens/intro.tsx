@@ -58,6 +58,8 @@ export function Intro({ onContinue }: IntroProps) {
 
           <TimeCompare />
         </div>
+
+        <SavingsCompareHero />
       </div>
 
       <div className="screen-footer">
@@ -153,6 +155,53 @@ function TimeCompare() {
       <div className="welcome-time-row is-you">
         <span className="welcome-time-label">Business Anywhere</span>
         <span className="welcome-time-value">Instant</span>
+      </div>
+    </div>
+  );
+}
+
+function SavingsCompareHero() {
+  return (
+    <div className="welcome-hero welcome-hero-savings">
+      <div className="welcome-hero-glow welcome-hero-glow-lime" aria-hidden="true" />
+      <div className="welcome-hero-glow welcome-hero-glow-forest" aria-hidden="true" />
+
+      <div className="savings-delta">
+        <span className="savings-delta-up" aria-hidden="true">
+          <Icon name="Trending up" size={14} color="#7fffb3" />
+        </span>
+        <div className="savings-delta-amount">
+          <span className="savings-delta-plus">+</span>
+          <span className="savings-delta-value">$200</span>
+          <span className="savings-delta-unit">/ yr</span>
+        </div>
+        <div className="savings-delta-caption">
+          Extra earnings on a $10,000 balance — every year you're with Partner.
+        </div>
+      </div>
+
+      <div className="welcome-hero-copy">
+        <div className="welcome-hero-headline">
+          Your cash,
+          <br />
+          actually paying you.
+        </div>
+        <p className="welcome-hero-body">
+          Top 5 banks pay 0.01% on savings. Partner Savings pays 2.00% — that's 200× more on every
+          idle dollar.
+        </p>
+      </div>
+
+      <div className="welcome-time-compare">
+        <div className="welcome-time-row">
+          <span className="welcome-time-label">Top 5 bank</span>
+          <span className="welcome-time-value">0.01% APY · $1 / yr</span>
+        </div>
+        <div className="welcome-time-divider" aria-hidden="true" />
+        <div className="welcome-time-row is-you">
+          <span className="welcome-time-label">Partner Savings</span>
+          <span className="welcome-time-value">2.00% APY · $200 / yr</span>
+        </div>
       </div>
     </div>
   );
