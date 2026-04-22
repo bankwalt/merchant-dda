@@ -186,13 +186,15 @@ interface WalletButtonProps {
 
 function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   const label = variant === "apple" ? "Apple Wallet" : "Google Wallet";
-  const iconColor = variant === "apple" ? "rgb(var(--white))" : undefined;
+  const Glyph = variant === "apple" ? AppleWalletGlyph : GoogleWalletGlyph;
 
   if (status === "error") {
     return (
       <button className="wallet-btn wallet-btn-error" onClick={onClick}>
-        <Icon name="Information circle" size={16} color="rgb(var(--error-700))" />
-        <span>Couldn't add · Retry</span>
+        <span className="wallet-btn-icon">
+          <Icon name="Information circle" size={18} color="rgb(var(--error-700))" />
+        </span>
+        <span>Couldn't add to {label} · Retry</span>
       </button>
     );
   }
@@ -200,21 +202,45 @@ function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   if (status === "added") {
     return (
       <button className="wallet-btn wallet-btn-added" disabled>
-        <Icon name="Check circle" size={16} color="rgb(var(--success-700))" />
-        <span>Added</span>
+        <span className="wallet-btn-icon">
+          <Icon name="Check circle" size={18} color="rgb(var(--success-700))" />
+        </span>
+        <span>Added to {label}</span>
       </button>
     );
   }
 
   return (
-    <button
-      className={`wallet-btn wallet-btn-${variant}`}
-      onClick={onClick}
-      disabled={status === "pending"}
-    >
-      <Icon name="Wallet" size={18} color={iconColor} />
-      {status === "pending" ? "Adding…" : `Add to ${label}`}
+    <button className="wallet-btn" onClick={onClick} disabled={status === "pending"}>
+      <span className="wallet-btn-icon">
+        <Glyph />
+      </span>
+      {status === "pending" ? `Adding to ${label}…` : `Add to ${label}`}
     </button>
+  );
+}
+
+function AppleWalletGlyph() {
+  return (
+    <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true">
+      <rect x="0.5" y="0.5" width="23" height="17" rx="3" fill="#8A5A3B" stroke="#6B4025" />
+      <rect x="2.5" y="2.5" width="19" height="13" rx="1.5" fill="#A36D47" />
+      <path d="M3 9 L21 9" stroke="#6B4025" strokeWidth="0.8" />
+      <rect x="14" y="10.5" width="5.5" height="3.5" rx="0.5" fill="#EAB06B" />
+      <rect x="14" y="10.5" width="5.5" height="3.5" rx="0.5" fill="none" stroke="#6B4025" strokeWidth="0.4" />
+    </svg>
+  );
+}
+
+function GoogleWalletGlyph() {
+  return (
+    <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true">
+      <rect x="0.5" y="0.5" width="23" height="17" rx="3" fill="#fff" stroke="#dadce0" />
+      <rect x="3" y="3" width="5" height="12" fill="#EA4335" />
+      <rect x="8" y="3" width="5" height="12" fill="#FBBC04" />
+      <rect x="13" y="3" width="4" height="12" fill="#34A853" />
+      <rect x="17" y="3" width="4" height="12" fill="#4285F4" />
+    </svg>
   );
 }
 

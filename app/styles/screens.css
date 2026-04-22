@@ -1460,8 +1460,8 @@
 .virtual-card-heading > div + div { margin-top: 4px; }
 
 .wallet-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
@@ -1469,27 +1469,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 40px;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: transform 0.05s ease, box-shadow 0.15s ease;
-}
-
-.wallet-btn:active { transform: translateY(1px); }
-
-.wallet-btn-apple {
-  background: rgb(var(--neutral-900));
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: #000;
   color: rgb(var(--white));
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  border: 1px solid #000;
+  transition: transform 0.05s ease, opacity 0.15s ease;
 }
 
-.wallet-btn-google {
-  background: rgb(var(--white));
-  color: rgb(var(--neutral-900));
-  border-color: rgb(var(--neutral-300));
+.wallet-btn:active {
+  transform: translateY(1px);
+}
+
+.wallet-btn-icon {
+  display: inline-flex;
+  flex-shrink: 0;
 }
 
 .virtual-card-disclaimer {
