@@ -118,7 +118,8 @@ export function FundsFlow({ onBack, onActivate }: FundsFlowProps) {
         </button>
         <p className="legal-text muted" style={{ textAlign: "center", margin: "12px 0 0" }}>
           By activating, you authorize <strong>First Internet Bank</strong> to open a Demand
-          Deposit Account in your business's name, and you agree to the disclosures reviewed above.
+          Deposit Account in your business's name and route your card settlements to it, and you
+          agree to the disclosures reviewed above.
         </p>
       </div>
 

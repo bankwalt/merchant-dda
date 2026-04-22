@@ -1241,6 +1241,12 @@
   border: 1px solid rgb(var(--neutral-200));
   border-radius: var(--radius-lg);
   padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-card .account-card-meta {
+  margin-top: auto;
 }
 
 .account-card.is-highlight {
@@ -1255,32 +1261,15 @@
   align-items: center;
 }
 
-.success-next {
-  background: rgb(var(--neutral-100));
-  border-radius: var(--radius-lg);
-  padding: 4px;
-}
-
-.next-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: var(--radius-md);
-}
-.next-item + .next-item { margin-top: 2px; }
-
-.next-item-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: rgb(var(--white));
-  color: rgb(var(--primary-700));
+.account-card-footnote {
+  margin-top: 4px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: var(--shadow-sm);
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(var(--success-700));
+  letter-spacing: -0.005em;
 }
 
 .virtual-card {
