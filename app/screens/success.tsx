@@ -24,7 +24,7 @@ export function Success({ onOpenDashboard, onRestart }: SuccessProps) {
             You're all set.
           </h1>
           <p className="body-500 muted" style={{ margin: "8px 0 0" }}>
-            Your Partner Business Anywhere and Savings accounts are open.
+            Your Business Anywhere and Savings accounts are open.
           </p>
         </div>
 

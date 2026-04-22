@@ -71,8 +71,8 @@ export function Intro({ onContinue }: IntroProps) {
           <Icon name="Arrow right" size={18} />
         </button>
         <p className="legal-text muted" style={{ textAlign: "center", margin: "12px 0 0" }}>
-          Partner is a financial technology company, not a bank. Banking services provided by
-          First Internet Bank, Member FDIC. Deposits insured up to $250,000.
+          Business Anywhere is a product of a financial technology company, not a bank. Banking
+          services provided by First Internet Bank, Member FDIC. Deposits insured up to $250,000.
         </p>
       </div>
     </div>

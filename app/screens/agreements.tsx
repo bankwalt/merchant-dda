@@ -114,7 +114,7 @@ export function Agreements({ onBack, onContinue }: AgreementsProps) {
             </span>
           </div>
           <p className="body-200 muted" style={{ margin: "4px 0 10px" }}>
-            From your prior Partner application. No action needed.
+            From your prior application. No action needed.
           </p>
           <div className="stack-sm">
             {priorConsents.map((c) => (
