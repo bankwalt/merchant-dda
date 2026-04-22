@@ -71,6 +71,7 @@ export interface DisclosureDoc {
   id: string;
   title: string;
   file: string;
+  version: string;
 }
 
 export interface DisclosureGroup {
@@ -84,6 +85,15 @@ export interface PriorConsent {
   id: string;
   title: string;
   url: string;
+}
+
+export interface ConsentRecord {
+  groupId: string;
+  docVersions: Record<string, string>;
+  acceptedAt: string;
+  // TODO(stage-3): populate from Auth0 session (sub + org_id) on the
+  // monorepo side. Prototype runs unauthenticated.
+  userId: string | null;
 }
 
 export const businessTypeOptions: { value: BusinessType; label: string }[] = [
@@ -203,16 +213,19 @@ export const disclosureGroups: DisclosureGroup[] = [
         id: "deposit",
         title: "Account Terms",
         file: "/disclosures/deposit.html",
+        version: "2026-04-01",
       },
       {
         id: "savings",
         title: "Savings",
         file: "/disclosures/savings.html",
+        version: "2026-04-01",
       },
       {
         id: "fees",
         title: "Fees",
         file: "/disclosures/fees.html",
+        version: "2026-04-16",
       },
     ],
   },
@@ -225,6 +238,7 @@ export const disclosureGroups: DisclosureGroup[] = [
         id: "debit-card",
         title: "Visa Business Debit Card Agreement",
         file: "/disclosures/debit-card.html",
+        version: "2026-03-20",
       },
     ],
   },
