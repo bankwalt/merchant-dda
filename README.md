@@ -4,7 +4,9 @@ React prototype for the Jaris Business Anywhere onboarding flow (the DDA
 "upgrade" experience that converts a processing-only merchant into a full
 deposit-account customer). Six screens — intro, review, agreements, funds
 flow, activating, success — including a Lithic-backed virtual-card
-provisioning block and Apple/Google Wallet push stubs.
+provisioning block and Apple/Google Wallet push stubs, plus a structured
+consent audit trail and minimal funnel instrumentation ready to swap in
+real sinks at Stage 3.
 
 This repo is staged work ahead of integrating into the Jaris frontend
 monorepo (`Frontend-dev` / `apps/merchant-portal`). Stages 1–2 are done
@@ -23,14 +25,15 @@ npm run format
 
 ## Status
 
-### Done (merged in [#1](https://github.com/bankwalt/merchant-dda/pull/1))
+### Stage 1–2 — Conventions + Tailwind (merged in [#1](https://github.com/bankwalt/merchant-dda/pull/1))
 
 **Stage 1 — Conventions**
 
 - `app/` folder, kebab-case `.tsx` / `.ts` everywhere, `~/*` path alias
 - TypeScript strict mode with typed prop interfaces and shared domain
   types in [`app/data/merchant.ts`](app/data/merchant.ts) (`Business`,
-  `Applicant`, `Merchant`, `AgreementDef`, `SavingsConfig`…)
+  `Applicant`, `Merchant`, `AgreementDef`, `SavingsConfig`,
+  `ConsentRecord`…)
 - Barrel `index.ts` in `components/`, `screens/`, `data/`
 - [`prettier.config.mjs`](prettier.config.mjs) and
   [`eslint.config.mjs`](eslint.config.mjs) mirrored from the monorepo
@@ -51,6 +54,66 @@ npm run format
   byte-identical to the monorepo's `theme/palette.css`
 - Existing markup (`body-500`, `heading-700`, `muted`, …) works
   unchanged because the preset I ported provides those classes
+
+### Prototype polish (pre-Stage-3)
+
+Incremental work on the standalone prototype before integration. Each
+PR is focused and independently reviewable.
+
+**Flow structure & content**
+
+- Disclosure list consolidated from 4 rows to 2 tabbed groups
+  ([#3](https://github.com/bankwalt/merchant-dda/pull/3))
+- Intro redesigned around the virtual debit card with an Apple/Google
+  Wallet CTA
+  ([#4](https://github.com/bankwalt/merchant-dda/pull/4))
+- Success screen lands on a non-zero **Business Anywhere** balance
+  from the swept settlement
+  ([#6](https://github.com/bankwalt/merchant-dda/pull/6)), with a
+  matching first-time virtual-card education block (tap, lock,
+  settle) ([#12](https://github.com/bankwalt/merchant-dda/pull/12))
+- Broader three-prop value hero on intro — no-fee banking, 2% APY
+  savings, spend without delay
+  ([#8](https://github.com/bankwalt/merchant-dda/pull/8))
+- "Partner" brand prefix dropped from product copy everywhere except
+  the "Powered by Partner" regulatory footer
+  ([#13](https://github.com/bankwalt/merchant-dda/pull/13))
+
+**Failure paths & recovery**
+
+- Support-escape bottom sheet wired into business and applicant
+  forms, plus activation-error and wallet-add-failure branches
+  reachable via `?demo=activate-fail` and `?demo=wallet-fail`
+  ([#5](https://github.com/bankwalt/merchant-dda/pull/5))
+- Re-verify-identity copy removed, PAN-reveal fallback on wallet
+  failure removed (out of PCI scope), virtual-only card copy
+  tightened
+  ([#9](https://github.com/bankwalt/merchant-dda/pull/9))
+- Wallet buttons restyled to match the official Add-to-Wallet
+  pattern — both black, stacked, branded glyphs
+  ([#14](https://github.com/bankwalt/merchant-dda/pull/14))
+
+**Quality & a11y**
+
+- Instant-settlement copy consistency, shared `StepDots` with
+  `role="group"` + `aria-current="step"`, keyboard-friendly "Mark
+  this section as read" on disclosures, live phone/email validation
+  on forms
+  ([#7](https://github.com/bankwalt/merchant-dda/pull/7))
+
+**Instrumentation**
+
+- Structured consent audit trail stored per accepted group with
+  `{groupId, docVersions, acceptedAt, userId}`. `userId` is `null`
+  in the prototype; Stage 3 populates it from the Auth0 session
+  ([#10](https://github.com/bankwalt/merchant-dda/pull/10))
+- Minimal funnel analytics via `track(event, props)` and
+  `useScreenView` in [`app/lib/analytics.ts`](app/lib/analytics.ts).
+  Eleven events wired across screen mounts and key actions
+  (disclosure accepted, activate clicked, activation failed, wallet
+  add succeeded/failed, support opened). Console sink for now; Stage
+  3 swaps in the real analytics client
+  ([#11](https://github.com/bankwalt/merchant-dda/pull/11))
 
 ## Stage 3 — Monorepo integration
 
@@ -144,12 +207,19 @@ block.
 
 - [ ] Gate entry behind the existing `applicationAuthMiddleware` so the
       flow only opens inside a valid JWT application session.
-- [ ] Pull the partner brand name (currently hardcoded "Partner" in
-      headings and the "THE PARTNER DIFFERENCE" eyebrow) from the
-      partner-context loader at
-      `routes/$partner/layout.tsx`. The four bank-owned disclosures
-      stay un-branded per
+- [ ] Wire the "Powered by Partner" chrome in
+      [`app/components/phone-chrome.tsx`](app/components/phone-chrome.tsx)
+      to the partner-context loader at `routes/$partner/layout.tsx`.
+      Product copy already uses the generic "Business Anywhere" name
+      per [#13](https://github.com/bankwalt/merchant-dda/pull/13); the
+      four bank-owned disclosures stay un-branded per
       [the compliance constraint](#disclosure-ownership).
+- [ ] Populate `ConsentRecord.userId` from the Auth0 session (`sub` +
+      `org_id`) and persist records server-side when the merchant
+      taps Continue on the agreements screen. See
+      [`app/data/merchant.ts`](app/data/merchant.ts) for the shape
+      and [`app/screens/agreements.tsx`](app/screens/agreements.tsx)
+      for the emission point.
 - [ ] Replace the `/jaris.svg` logo with the partner's themed logo
       via the existing theming package (`@jarisinc/theming`).
 
@@ -159,10 +229,16 @@ block.
       [`app/screens/success.tsx`](app/screens/success.tsx) to Lithic's
       push-provisioning API. See
       [docs](https://docs.lithic.com/docs/digital-wallets-push-provisioning).
-- [ ] Use Lithic's hosted iframe (`card.embed`) for card-number display
-      to keep PAN / CVV out of browser memory.
+      The UI already handles `idle → pending → added/error` per wallet
+      with a branded retry variant.
 - [ ] Apple Wallet web push is not available — button must deep-link
       to the native portal app on iOS or fall back to a QR handoff.
+- [ ] Confirm the PCI posture: the prototype never renders PAN/CVV in
+      the DOM (the fallback was removed in
+      [#9](https://github.com/bankwalt/merchant-dda/pull/9)). If
+      merchants need to see card details later, surface them from a
+      Lithic-hosted iframe (`card.embed`) inside the dashboard, not
+      this onboarding flow.
 
 **Testing**
 
