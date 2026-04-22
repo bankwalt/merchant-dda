@@ -6,99 +6,57 @@ interface IntroProps {
 
 export function Intro({ onContinue }: IntroProps) {
   return (
-    <div className="screen">
-      <div className="intro-hero">
-        <div className="intro-logo">
-          <img src="/jaris.svg" width="32" height="32" alt="Partner" />
+    <div className="screen welcome-screen">
+      <div className="welcome-top">
+        <div className="welcome-brand">
+          <div className="welcome-brand-mark">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path
+                d="M3 7.5L5.6 10 11 4.5"
+                stroke="#fff"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
           <span className="body-400 muted-strong">Brightside Coffee</span>
         </div>
-        <div className="intro-badge">
-          <Icon name="Sparkles" size={14} />
+        <div className="new-pill">
+          <Icon name="Sparkles" size={12} color="rgb(var(--primary-500))" />
           <span>New</span>
         </div>
       </div>
 
-      <div className="screen-body stack-xl" style={{ paddingTop: 16 }}>
+      <div className="screen-body welcome-body">
         <div>
-          <h1 className="heading-700" style={{ margin: 0, letterSpacing: '-0.01em' }}>
-            Unlock your<br />Business Anywhere account.
-          </h1>
-          <p className="body-500 muted" style={{ margin: '12px 0 0' }}>
-            Your settlements, set free.
-          </p>
-        </div>
-
-        <div className="instant-hero">
-          <div className="instant-hero-glow" aria-hidden="true" />
-          <div className="instant-hero-eyebrow">
-            <Icon name="Sparkles" size={14} color="rgb(var(--white))" />
-            <span>The Partner difference</span>
-          </div>
-          <h2 className="instant-hero-title">
-            Your settlements,
+          <h1 className="welcome-title">
+            Welcome to
             <br />
-            <em>the moment</em> they clear.
-          </h2>
-          <p className="instant-hero-sub">
-            No added bank transfer delays. Swipe your debit card the second your settlements post.
-          </p>
-
-          <div className="settlement-compare">
-            <div className="settlement-row">
-              <span className="settlement-row-label">Traditional bank</span>
-              <div className="settlement-bar">
-                <div className="settlement-bar-fill is-slow" />
-              </div>
-              <span className="settlement-row-value">1–3 days</span>
-            </div>
-            <div className="settlement-row is-you">
-              <span className="settlement-row-label">Business Anywhere</span>
-              <div className="settlement-bar">
-                <div className="settlement-bar-fill is-instant" />
-              </div>
-              <span className="settlement-row-value">Instant</span>
-            </div>
-          </div>
+            Business Anywhere.
+          </h1>
+          <p className="welcome-sub">Your settlements, set free.</p>
         </div>
 
-        <div className="trust-pills">
-          <div className="trust-pill">
-            <Icon name="Shield check" size={16} color="rgb(var(--primary-700))" />
-            <div>
-              <div className="heading-100">FDIC insured</div>
-              <div className="body-200 muted">Up to $250,000</div>
-            </div>
-          </div>
-          <div className="trust-pill">
-            <Icon name="Clock" size={16} color="rgb(var(--primary-700))" />
-            <div>
-              <div className="heading-100">24/7 access</div>
-              <div className="body-200 muted">Move money any time</div>
-            </div>
-          </div>
-        </div>
+        <div className="welcome-hero">
+          <div className="welcome-hero-glow welcome-hero-glow-blue" aria-hidden="true" />
+          <div className="welcome-hero-glow welcome-hero-glow-teal" aria-hidden="true" />
 
-        <div className="intro-preview">
-          <div className="intro-preview-row">
-            <span className="body-300 muted">Business Anywhere</span>
-            <span className="body-300" style={{ color: 'rgb(var(--success-700))' }}>
-              0.00% APY
-            </span>
+          <VirtualDebitCard mask="5525" />
+
+          <div className="welcome-hero-copy">
+            <div className="welcome-hero-headline">
+              Swipe the second
+              <br />
+              your settlements post.
+            </div>
+            <p className="welcome-hero-body">
+              No transfer delays. Your virtual debit card works the moment funds clear — tap to
+              pay, add to Apple or Google Wallet.
+            </p>
           </div>
-          <div className="heading-700" style={{ letterSpacing: '-0.01em' }}>
-            $0.00
-          </div>
-          <div className="intro-preview-divider" />
-          <div className="intro-preview-row">
-            <span className="body-300 muted">Savings</span>
-            <span className="body-300" style={{ color: 'rgb(var(--success-700))' }}>
-              2.00% APY
-            </span>
-          </div>
-          <div className="heading-400">$0.00</div>
-          <div className="legal-text" style={{ color: 'rgb(var(--neutral-400))', marginTop: 6 }}>
-            $50 minimum end-of-month balance to earn interest
-          </div>
+
+          <TimeCompare />
         </div>
       </div>
 
@@ -107,12 +65,95 @@ export function Intro({ onContinue }: IntroProps) {
           Get started
           <Icon name="Arrow right" size={18} />
         </button>
-        <p className="legal-text muted" style={{ textAlign: 'center', margin: '12px 0 0' }}>
-          Partner is a financial technology company, not a bank. Banking
-          services provided by First Internet Bank, Member FDIC. Deposits
-          insured up to $250,000.
+        <p className="legal-text muted" style={{ textAlign: "center", margin: "12px 0 0" }}>
+          Partner is a financial technology company, not a bank. Banking services provided by
+          First Internet Bank, Member FDIC. Deposits insured up to $250,000.
         </p>
       </div>
     </div>
-  )
+  );
+}
+
+function VirtualDebitCard({ mask }: { mask: string }) {
+  return (
+    <div className="welcome-card">
+      <div className="welcome-card-base" aria-hidden="true" />
+      <div className="welcome-card-sheen" aria-hidden="true" />
+      <div className="welcome-card-highlight" aria-hidden="true" />
+
+      <div className="welcome-card-inner">
+        <div className="welcome-card-top">
+          <div>
+            <div className="welcome-card-eyebrow">Business Anywhere</div>
+            <div className="welcome-card-holder">Brightside Coffee</div>
+          </div>
+          <ContactlessGlyph />
+        </div>
+
+        <div className="welcome-card-chip">
+          <span className="welcome-card-chip-dot" aria-hidden="true" />
+          Available now
+        </div>
+
+        <div className="welcome-card-bottom">
+          <div>
+            <div className="welcome-card-mask">•••• {mask}</div>
+            <div className="welcome-card-label">VIRTUAL DEBIT</div>
+          </div>
+          <div className="welcome-card-network">Visa</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ContactlessGlyph() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+      aria-hidden="true"
+      className="welcome-card-contactless"
+    >
+      <path
+        d="M6 4.5c3 2.4 3 11.6 0 14"
+        stroke="#fff"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M10 3c4.5 3.5 4.5 13.5 0 17"
+        stroke="#fff"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M14 1.5c6 4.5 6 15.5 0 20"
+        stroke="#fff"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+function TimeCompare() {
+  return (
+    <div className="welcome-time-compare">
+      <div className="welcome-time-row">
+        <span className="welcome-time-label">Traditional bank</span>
+        <span className="welcome-time-value">1–3 days</span>
+      </div>
+      <div className="welcome-time-divider" aria-hidden="true" />
+      <div className="welcome-time-row is-you">
+        <span className="welcome-time-label">Business Anywhere</span>
+        <span className="welcome-time-value">Instant</span>
+      </div>
+    </div>
+  );
 }

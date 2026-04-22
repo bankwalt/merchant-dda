@@ -1,208 +1,317 @@
-/* ===== Intro ===== */
+/* ===== Intro / Welcome ===== */
 
-.intro-hero {
+.welcome-screen {
+  background: rgb(var(--white));
+}
+
+.welcome-top {
   padding: 16px 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.intro-logo {
+.welcome-brand {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.intro-badge {
-  display: inline-flex;
+.welcome-brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgb(var(--primary-900));
+  display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgb(var(--primary-100));
-  color: rgb(var(--primary-700));
-  font-size: 0.75rem;
-  font-weight: 600;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.instant-hero {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgb(var(--primary-800)) 0%, rgb(var(--primary-600)) 55%, rgb(var(--secondary-500)) 100%);
-  border-radius: var(--radius-xl);
-  padding: 22px 20px 18px;
-  color: rgb(var(--white));
-  box-shadow: var(--shadow-lg);
-}
-
-.instant-hero-glow {
-  position: absolute;
-  top: -40%;
-  right: -20%;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 60%);
-  pointer-events: none;
-}
-
-.instant-hero-eyebrow {
-  position: relative;
+.new-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 6px 12px 6px 10px;
+  background: rgb(var(--primary-100));
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(4px);
-}
-
-.instant-hero-title {
-  position: relative;
-  margin: 14px 0 6px;
-  font-size: 28px;
-  line-height: 1.1;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--primary-500));
   letter-spacing: -0.01em;
-  color: rgb(var(--white));
 }
 
-.instant-hero-title em {
-  font-style: normal;
-  background: linear-gradient(90deg, rgb(var(--white)) 0%, rgb(var(--secondary-200)) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.instant-hero-sub {
-  position: relative;
-  margin: 0 0 16px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.settlement-compare {
-  position: relative;
-  background: rgba(0, 0, 0, 0.22);
-  border-radius: var(--radius-lg);
-  padding: 12px 14px;
+.welcome-body {
+  padding-top: 8px;
+  gap: 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
-.settlement-row {
-  display: grid;
-  grid-template-columns: 110px 1fr 64px;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+.welcome-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: rgb(var(--neutral-900));
 }
 
-.settlement-row.is-you {
-  color: rgb(var(--white));
-  font-weight: 600;
+.welcome-sub {
+  margin: 8px 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgb(var(--neutral-500));
+  letter-spacing: -0.01em;
 }
 
-.settlement-row-label {
-  white-space: nowrap;
-}
-
-.settlement-row-value {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-.settlement-bar {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
+.welcome-hero {
+  position: relative;
   overflow: hidden;
+  border-radius: 22px;
+  padding: 18px;
+  color: rgb(var(--white));
+  background: linear-gradient(155deg, #1b296d 0%, #0f2a7a 45%, #0d4a52 100%);
+  box-shadow: 0 8px 24px -8px rgba(15, 25, 70, 0.35);
+}
+
+.welcome-hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.welcome-hero-glow-blue {
+  top: -80px;
+  right: -60px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(0, 82, 255, 0.35), transparent 65%);
+}
+
+.welcome-hero-glow-teal {
+  bottom: -80px;
+  left: -50px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(42, 132, 102, 0.3), transparent 65%);
+}
+
+.welcome-card,
+.welcome-hero-copy,
+.welcome-time-compare {
   position: relative;
 }
 
-.settlement-bar-fill {
-  height: 100%;
-  border-radius: 999px;
+.welcome-hero-copy {
+  margin-top: 14px;
 }
 
-.settlement-bar-fill.is-slow {
-  width: 90%;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.35) 0 6px,
-    transparent 6px 12px
+.welcome-hero-headline {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgb(var(--white));
+  letter-spacing: -0.02em;
+}
+
+.welcome-hero-body {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: -0.005em;
+}
+
+/* ----- Virtual debit card illustration ----- */
+
+.welcome-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.586 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 20px 40px -12px rgba(27, 41, 109, 0.45),
+    0 8px 16px -4px rgba(27, 41, 109, 0.25);
+  font-family: -apple-system, "SF Pro Display", system-ui, sans-serif;
+}
+
+.welcome-card-base,
+.welcome-card-sheen,
+.welcome-card-highlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.welcome-card-base {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--primary-900)) 0%,
+    rgb(var(--primary-500)) 45%,
+    rgb(var(--secondary-500)) 100%
   );
 }
 
-.settlement-bar-fill.is-instant {
-  width: 14%;
-  background: linear-gradient(90deg, rgb(var(--success-300)), rgb(var(--white)));
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
-  animation: instant-pulse 1.8s ease-in-out infinite;
+.welcome-card-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.16) 48%,
+    transparent 62%
+  );
 }
 
-@keyframes instant-pulse {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; }
+.welcome-card-highlight {
+  inset: auto;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent 65%);
+  filter: blur(8px);
 }
 
-.trust-pills {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.trust-pill {
+.welcome-card-inner {
+  position: relative;
+  height: 100%;
+  padding: 18px 20px;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgb(var(--white));
-  border: 1px solid rgb(var(--neutral-200));
-  border-radius: var(--radius-lg);
-  padding: 10px 12px;
-}
-
-.trust-pill .heading-100 {
-  color: rgb(var(--neutral-900));
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 13px;
-}
-
-.intro-preview {
-  background: linear-gradient(135deg, rgb(var(--neutral-900)) 0%, rgb(var(--primary-900)) 100%);
-  border-radius: var(--radius-xl);
-  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
   color: rgb(var(--white));
-  box-shadow: var(--shadow-lg);
 }
 
-.intro-preview-row {
+.welcome-card-top {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+}
+
+.welcome-card-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.welcome-card-holder {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 2px;
+  letter-spacing: -0.01em;
+}
+
+.welcome-card-contactless {
+  opacity: 0.9;
+}
+
+.welcome-card-chip {
+  align-self: flex-start;
+  display: inline-flex;
   align-items: center;
-  color: rgb(var(--neutral-300));
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-.intro-preview-row .muted { color: rgb(var(--neutral-400)); }
-
-.intro-preview-divider {
-  height: 1px;
-  background: rgb(var(--neutral-700));
-  margin: 16px 0;
+.welcome-card-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7fffb3;
+  box-shadow: 0 0 6px rgba(127, 255, 179, 0.9);
 }
 
-.intro-preview .heading-700,
-.intro-preview .heading-400 {
+.welcome-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.welcome-card-mask {
+  font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  opacity: 0.92;
+}
+
+.welcome-card-label {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+.welcome-card-network {
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+/* ----- Instant vs 1-3 days compare ----- */
+
+.welcome-time-compare {
+  margin-top: 12px;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.welcome-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-radius: 10px;
+}
+
+.welcome-time-row.is-you {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.welcome-time-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.welcome-time-row.is-you .welcome-time-label {
+  font-weight: 600;
   color: rgb(var(--white));
-  margin: 4px 0 0;
+}
+
+.welcome-time-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.005em;
+}
+
+.welcome-time-row.is-you .welcome-time-value {
+  color: #7fffb3;
+}
+
+.welcome-time-divider {
+  height: 0.5px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 14px;
 }
 
 /* ===== Review ===== */
