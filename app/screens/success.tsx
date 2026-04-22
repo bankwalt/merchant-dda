@@ -46,6 +46,8 @@ export function Success({ onOpenDashboard, onRestart }: SuccessProps) {
         </div>
 
         <VirtualCard mask="5525" network="Visa" />
+
+        <FirstTimeTips />
       </div>
 
       <div className="screen-footer stack-sm">
@@ -216,3 +218,48 @@ function WalletButton({ variant, status, onClick }: WalletButtonProps) {
   );
 }
 
+function FirstTimeTips() {
+  return (
+    <section className="first-time-tips" aria-label="First time with a virtual card">
+      <div className="first-time-tips-header">
+        <Icon name="Sparkles" size={14} color="rgb(var(--primary-700))" />
+        <span className="heading-100" style={{ color: "rgb(var(--neutral-700))" }}>
+          First time with a virtual card?
+        </span>
+      </div>
+      <ul className="first-time-tips-list">
+        <TipRow
+          icon="Wallet"
+          title="Tap at any Visa terminal"
+          sub="Contactless pay works the moment the card lands in Apple or Google Wallet."
+        />
+        <TipRow
+          icon="Lock closed"
+          title="Lock it in seconds"
+          sub="Lost phone? Freeze the card from Dashboard → Cards — no call needed."
+        />
+        <TipRow
+          icon="Cash"
+          title="Settlements post in real time"
+          sub="Every card sale lands in Business Anywhere the moment it clears."
+        />
+      </ul>
+    </section>
+  );
+}
+
+function TipRow({ icon, title, sub }: { icon: string; title: string; sub: string }) {
+  return (
+    <li className="first-time-tip">
+      <span className="first-time-tip-icon" aria-hidden="true">
+        <Icon name={icon} size={16} color="rgb(var(--primary-700))" />
+      </span>
+      <div className="first-time-tip-body">
+        <div className="heading-200">{title}</div>
+        <div className="body-200 muted" style={{ marginTop: 2 }}>
+          {sub}
+        </div>
+      </div>
+    </li>
+  );
+}
