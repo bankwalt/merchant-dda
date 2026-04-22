@@ -108,7 +108,6 @@ type WalletTarget = "apple" | "google";
 function VirtualCard({ mask, network }: VirtualCardProps) {
   const [apple, setApple] = useState<WalletStatus>("idle");
   const [google, setGoogle] = useState<WalletStatus>("idle");
-  const [showDetails, setShowDetails] = useState(false);
 
   const failTarget: WalletTarget | null =
     typeof window !== "undefined" &&
@@ -127,8 +126,6 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
     set("added");
   };
 
-  const anyError = apple === "error" || google === "error";
-
   return (
     <div className="virtual-card">
       <div className="virtual-card-art">
@@ -146,9 +143,10 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
 
       <div className="virtual-card-body">
         <div className="virtual-card-heading">
-          <div className="heading-200">Your card is ready</div>
+          <div className="heading-200">Your virtual card is ready</div>
           <div className="body-200 muted">
-            Add it to a wallet to tap-to-pay today. Physical card ships next week.
+            Add it to a wallet and tap to pay anywhere Visa is accepted. No physical card — your
+            phone is the card.
           </div>
         </div>
 
@@ -164,14 +162,6 @@ function VirtualCard({ mask, network }: VirtualCardProps) {
             onClick={() => provision(setGoogle, "google")}
           />
         </div>
-
-        {anyError && !showDetails && (
-          <button className="wallet-fallback-link" onClick={() => setShowDetails(true)}>
-            Use card details instead
-          </button>
-        )}
-
-        {showDetails && <ManualCardDetails mask={mask} onClose={() => setShowDetails(false)} />}
 
         <div className="legal-text muted virtual-card-disclaimer">
           <Icon name="Lock closed" size={12} /> Card number never leaves your issuer.
@@ -218,41 +208,6 @@ function WalletButton({ variant, status, onClick }: WalletButtonProps) {
       <Icon name="Wallet" size={18} color={iconColor} />
       {status === "pending" ? "Adding…" : `Add to ${label}`}
     </button>
-  );
-}
-
-interface ManualCardDetailsProps {
-  mask: string;
-  onClose: () => void;
-}
-
-function ManualCardDetails({ mask, onClose }: ManualCardDetailsProps) {
-  return (
-    <div className="card-details-inline" role="region" aria-label="Card details">
-      <div className="card-details-header">
-        <div className="heading-200">Card details</div>
-        <button className="icon-btn" onClick={onClose} aria-label="Hide card details">
-          <Icon name="X" size={16} />
-        </button>
-      </div>
-      <dl className="card-details-list">
-        <div>
-          <dt className="body-200 muted">Number</dt>
-          <dd className="body-400">4242 4242 4242 {mask}</dd>
-        </div>
-        <div>
-          <dt className="body-200 muted">Expires</dt>
-          <dd className="body-400">12/29</dd>
-        </div>
-        <div>
-          <dt className="body-200 muted">CVV</dt>
-          <dd className="body-400">•••</dd>
-        </div>
-      </dl>
-      <p className="legal-text muted" style={{ margin: 0 }}>
-        Use these details to check out online while we sort out wallet provisioning.
-      </p>
-    </div>
   );
 }
 
