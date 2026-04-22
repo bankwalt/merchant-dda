@@ -26,7 +26,13 @@ export function Success({ onOpenDashboard, onRestart }: SuccessProps) {
         </div>
 
         <div className="success-cards">
-          <AccountCard label="Business Anywhere" mask="••4201" amount="$0.00" apy="0.00% APY" />
+          <AccountCard
+            label="Business Anywhere"
+            mask="••4201"
+            amount="$8,420.17"
+            apy="0.00% APY"
+            footnote="Today's settlement"
+          />
           <AccountCard
             label="Savings"
             mask="••4202"
@@ -37,14 +43,6 @@ export function Success({ onOpenDashboard, onRestart }: SuccessProps) {
         </div>
 
         <VirtualCard mask="5525" network="Visa" />
-
-        <div className="success-next">
-          <NextItem
-            icon="Cash"
-            title="Next settlement"
-            sub="Routes to Business Anywhere tomorrow"
-          />
-        </div>
       </div>
 
       <div className="screen-footer stack-sm">
@@ -66,15 +64,22 @@ interface AccountCardProps {
   amount: string;
   apy: string;
   highlight?: boolean;
+  footnote?: string;
 }
 
-function AccountCard({ label, mask, amount, apy, highlight }: AccountCardProps) {
+function AccountCard({ label, mask, amount, apy, highlight, footnote }: AccountCardProps) {
   return (
     <div className={`account-card ${highlight ? "is-highlight" : ""}`}>
       <div className="body-300 muted">{label}</div>
       <div className="heading-500" style={{ marginTop: 4 }}>
         {amount}
       </div>
+      {footnote && (
+        <div className="account-card-footnote">
+          <Icon name="Sparkles" size={12} color="rgb(var(--success-700))" />
+          <span>{footnote}</span>
+        </div>
+      )}
       <div className="account-card-meta">
         <span className="body-200 muted">{mask}</span>
         <span
@@ -251,22 +256,3 @@ function ManualCardDetails({ mask, onClose }: ManualCardDetailsProps) {
   );
 }
 
-interface NextItemProps {
-  icon: string;
-  title: string;
-  sub: string;
-}
-
-function NextItem({ icon, title, sub }: NextItemProps) {
-  return (
-    <div className="next-item">
-      <div className="next-item-icon">
-        <Icon name={icon} size={18} />
-      </div>
-      <div>
-        <div className="heading-200">{title}</div>
-        <div className="body-200 muted">{sub}</div>
-      </div>
-    </div>
-  );
-}
